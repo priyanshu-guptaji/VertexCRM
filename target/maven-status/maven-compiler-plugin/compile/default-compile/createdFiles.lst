@@ -14,6 +14,7 @@ com\crm\service\LeadService.class
 com\crm\entity\Contact.class
 com\crm\entity\Member.class
 com\crm\repository\DealRepository.class
+com\crm\controller\AuthController$CustomerSignupRequest.class
 com\crm\util\AuthenticationUtils.class
 com\crm\dto\OrganizationDto.class
 com\crm\dto\AccountDto.class

@@ -19,9 +19,16 @@ export function AuthProvider({ children }) {
       
       // Get user info and normalize role casing
       const stored = JSON.parse(localStorage.getItem('userInfo') || '{}');
-      const normalized = stored && stored.role
-        ? { ...stored, role: String(stored.role).toUpperCase() }
-        : stored;
+      const roleRaw = stored && stored.role ? String(stored.role).toUpperCase() : undefined;
+      // Canonicalize to match backend @PreAuthorize and frontend routes
+      const roleCanonical = roleRaw
+        ? (roleRaw.startsWith('ADMIN') ? 'ADMIN'
+          : roleRaw.startsWith('MANAGER') ? 'MANAGER'
+          : roleRaw.includes('SALES') ? 'SALES'
+          : roleRaw.startsWith('USER') ? 'USER'
+          : roleRaw.replace(/[^A-Z0-9]/g, ''))
+        : undefined;
+      const normalized = stored ? { ...stored, role: roleCanonical } : stored;
       setUser(normalized);
       // Attach multi-tenant hints to every request if available
       if (normalized && (normalized.orgId || normalized.accountId)) {
@@ -49,7 +56,12 @@ export function AuthProvider({ children }) {
       role
     } = payload;
     if (!token) return { success: false, error: 'Invalid response from server - no token received' };
-    const roleNormalized = String(role || '').toUpperCase();
+    const roleUpper = String(role || '').toUpperCase();
+    const roleNormalized = roleUpper.startsWith('ADMIN') ? 'ADMIN'
+      : roleUpper.startsWith('MANAGER') ? 'MANAGER'
+      : roleUpper.includes('SALES') ? 'SALES'
+      : roleUpper.startsWith('USER') ? 'USER'
+      : roleUpper.replace(/[^A-Z0-9]/g, '');
     const nextUser = {
       memberId: memberId ?? userId,
       email: userEmail,

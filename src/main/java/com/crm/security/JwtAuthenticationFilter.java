@@ -52,15 +52,29 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             logger.debug("JWT Filter - Validating token for user: " + username);
             try {
                 if (jwtConfig.validateToken(jwtToken, username)) {
-                    // Extract role from token and create authorities (normalize to uppercase)
+                    // Extract role from token and create authorities (normalize to expected Spring format)
                     String role = jwtConfig.extractRole(jwtToken);
                     String roleUpper = role != null ? role.toUpperCase() : "";
+                    // Map common role names to consistent identifiers without spaces
+                    String normalizedRole;
+                    if (roleUpper.startsWith("ADMIN")) {
+                        normalizedRole = "ADMIN";
+                    } else if (roleUpper.startsWith("MANAGER")) {
+                        normalizedRole = "MANAGER";
+                    } else if (roleUpper.contains("SALES")) {
+                        normalizedRole = "SALES";
+                    } else if (roleUpper.startsWith("USER")) {
+                        normalizedRole = "USER";
+                    } else {
+                        // Fallback: remove non-alphanumerics and spaces
+                        normalizedRole = roleUpper.replaceAll("[^A-Z0-9]", "");
+                    }
                     Long orgId = jwtConfig.extractOrgId(jwtToken);
                     Long memberId = jwtConfig.extractMemberId(jwtToken);
-                    TenantContext.setRole(roleUpper);
+                    TenantContext.setRole(normalizedRole);
                     TenantContext.setOrgId(orgId);
                     TenantContext.setMemberId(memberId);
-                    List<SimpleGrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_" + roleUpper));
+                    List<SimpleGrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_" + normalizedRole));
                     
                     UsernamePasswordAuthenticationToken authToken = 
                         new UsernamePasswordAuthenticationToken(username, null, authorities);

@@ -98,6 +98,29 @@ public class AuthController {
             return ResponseEntity.badRequest().body("Authentication failed: " + e.getMessage());
         }
     }
+
+    @PostMapping("/customer/login")
+    public ResponseEntity<?> authenticateCustomer(@Valid @RequestBody LoginRequest loginRequest) {
+        logger.info("=== CUSTOMER LOGIN ATTEMPT === email={}", loginRequest.getEmail());
+        try {
+            if (loginRequest.getEmail() == null || loginRequest.getEmail().trim().isEmpty()) {
+                return ResponseEntity.badRequest().body("Email is required");
+            }
+            if (loginRequest.getPassword() == null || loginRequest.getPassword().isEmpty()) {
+                return ResponseEntity.badRequest().body("Password is required");
+            }
+            String email = loginRequest.getEmail().trim();
+            if (!email.matches("^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$")) {
+                return ResponseEntity.badRequest().body("Email must be valid");
+            }
+
+            JwtResponse jwtResponse = simpleAuthService.authenticateUser(new LoginRequest(email, loginRequest.getPassword()));
+            return ResponseEntity.ok(jwtResponse);
+        } catch (Exception e) {
+            logger.error("Customer login failed for email: {} - {}", loginRequest.getEmail(), e.getMessage());
+            return ResponseEntity.badRequest().body("Authentication failed: " + e.getMessage());
+        }
+    }
     
     @GetMapping("/debug")
     public ResponseEntity<?> debugDatabase() {
@@ -200,5 +223,78 @@ public class AuthController {
         public void setAdminPassword(String adminPassword) {
             this.adminPassword = adminPassword;
         }
+    }
+
+    // ================= Customer Signup =================
+    @PostMapping("/customer/signup")
+    public ResponseEntity<?> customerSignup(@Valid @RequestBody CustomerSignupRequest request) {
+        try {
+            // Basic validation
+            if (request.getFullName() == null || request.getFullName().trim().isEmpty()) {
+                return ResponseEntity.badRequest().body("Full name is required");
+            }
+            if (request.getCompanyName() == null || request.getCompanyName().trim().isEmpty()) {
+                return ResponseEntity.badRequest().body("Company name is required");
+            }
+            if (request.getEmail() == null || request.getEmail().trim().isEmpty()) {
+                return ResponseEntity.badRequest().body("Email is required");
+            }
+            String email = request.getEmail().trim();
+            if (!email.matches("^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$")) {
+                return ResponseEntity.badRequest().body("Email must be valid");
+            }
+            if (request.getPassword() == null || request.getPassword().length() < 6) {
+                return ResponseEntity.badRequest().body("Password must be at least 6 characters");
+            }
+
+            // Create organization (use customer's email as orgEmail to ensure contactability)
+            OrganizationDto orgDto = new OrganizationDto();
+            orgDto.setOrgName(request.getCompanyName().trim());
+            orgDto.setOrgEmail(email);
+            OrganizationDto createdOrg = organizationService.createOrganization(orgDto);
+
+            // Resolve default role "User"
+            var userRole = roleRepository.findByRoleName("User")
+                    .orElseThrow(() -> new RuntimeException("Default role 'User' not found"));
+
+            // Create member under the organization
+            MemberDto memberDto = new MemberDto();
+            memberDto.setName(request.getFullName().trim());
+            memberDto.setEmail(email);
+            memberDto.setPassword(request.getPassword());
+            memberDto.setOrgId(createdOrg.getOrgId());
+            memberDto.setRoleId(userRole.getRoleId());
+            memberService.createMember(memberDto);
+
+            return ResponseEntity.ok("Customer account created successfully");
+        } catch (Exception e) {
+            logger.error("Customer signup failed for email: {} - {}", request.getEmail(), e.getMessage());
+            return ResponseEntity.badRequest().body("Error: " + e.getMessage());
+        }
+    }
+
+    public static class CustomerSignupRequest {
+        private String fullName;
+        private String email;
+        private String password;
+        private String companyName;
+        private String phone;
+
+        public CustomerSignupRequest() {}
+
+        public String getFullName() { return fullName; }
+        public void setFullName(String fullName) { this.fullName = fullName; }
+
+        public String getEmail() { return email; }
+        public void setEmail(String email) { this.email = email; }
+
+        public String getPassword() { return password; }
+        public void setPassword(String password) { this.password = password; }
+
+        public String getCompanyName() { return companyName; }
+        public void setCompanyName(String companyName) { this.companyName = companyName; }
+
+        public String getPhone() { return phone; }
+        public void setPhone(String phone) { this.phone = phone; }
     }
 }
