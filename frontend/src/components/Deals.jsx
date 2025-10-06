@@ -18,7 +18,7 @@ function Deals() {
     dealName: '',
     description: '',
     dealValue: '',
-    dealStage: '',
+    stage: '',
     expectedCloseDate: '',
     actualCloseDate: '',
     probability: '',
@@ -85,14 +85,17 @@ function Deals() {
     e.preventDefault();
     try {
       const dealData = {
-        ...formData,
-        title: formData.dealName,
+        dealName: formData.dealName,
+        description: formData.description,
         dealValue: formData.dealValue ? parseFloat(formData.dealValue) : 0,
+        stage: formData.stage && formData.stage.trim() ? formData.stage : 'Prospecting',
         expectedCloseDate: formData.expectedCloseDate ? new Date(formData.expectedCloseDate).toISOString() : null,
         actualCloseDate: formData.actualCloseDate ? new Date(formData.actualCloseDate).toISOString() : null,
+        probability: formData.probability,
         accountId: formData.accountId ? parseInt(formData.accountId) : null,
         contactId: formData.contactId ? parseInt(formData.contactId) : null
       };
+      console.log('Submitting deal payload:', dealData);
 
       if (editingDeal) {
         await api.put(`/deals/${editingDeal.dealId}`, dealData);
@@ -120,7 +123,7 @@ function Deals() {
       dealName: deal.dealName || '',
       description: deal.description || '',
       dealValue: deal.dealValue?.toString() || '',
-      dealStage: deal.dealStage || '',
+      stage: deal.stage || deal.dealStage || '',
       expectedCloseDate: deal.expectedCloseDate ? new Date(deal.expectedCloseDate).toISOString().split('T')[0] : '',
       actualCloseDate: deal.actualCloseDate ? new Date(deal.actualCloseDate).toISOString().split('T')[0] : '',
       probability: deal.probability || '',
@@ -148,7 +151,7 @@ function Deals() {
       dealName: '',
       description: '',
       dealValue: '',
-      dealStage: '',
+      stage: '',
       expectedCloseDate: '',
       actualCloseDate: '',
       probability: '',
@@ -209,13 +212,15 @@ function Deals() {
             <p className="text-secondary-600">Manage your sales opportunities</p>
           </div>
         </div>
-        <button
-          onClick={() => setShowModal(true)}
-          className="btn btn-primary"
-        >
-          <Plus className="h-4 w-4 mr-2" />
-          Add Deal
-        </button>
+        {user?.role === 'ADMIN' && (
+          <button
+            onClick={() => setShowModal(true)}
+            className="btn btn-primary"
+          >
+            <Plus className="h-4 w-4 mr-2" />
+            Add Deal
+          </button>
+        )}
       </div>
 
       {/* Search and Filters */}
@@ -388,8 +393,8 @@ function Deals() {
                   </label>
                   <select
                     required
-                    value={formData.dealStage}
-                    onChange={(e) => setFormData({...formData, dealStage: e.target.value})}
+                    value={formData.stage}
+                    onChange={(e) => setFormData({...formData, stage: e.target.value})}
                     className="input"
                   >
                     <option value="">Select stage</option>

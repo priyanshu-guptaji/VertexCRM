@@ -122,6 +122,7 @@ function Activities() {
         leadId: formData.leadId ? parseInt(formData.leadId) : null
       };
 
+      console.log('Submitting activity payload:', activityData);
       if (editingActivity) {
         await api.put(`/activities/${editingActivity.activityId}`, activityData);
         toast.success('Activity updated successfully');

@@ -4,10 +4,12 @@ import { Toaster } from 'react-hot-toast';
 import { AuthProvider, useAuth } from './contexts/AuthContext.jsx';
 import Login from './components/Login.jsx';
 import Register from './components/Register.jsx';
+import CustomerLogin from './components/CustomerLogin.jsx';
 import Dashboard from './components/Dashboard.jsx';
 import ManagerDashboard from './components/Dashboard.jsx';
 import SalesDashboard from './components/Dashboard.jsx';
 import CustomerDashboard from './components/Dashboard.jsx';
+import CustomerSignup from './components/CustomerSignup.jsx';
 import Leads from './components/Leads.jsx';
 import Contacts from './components/Contacts.jsx';
 import Accounts from './components/Accounts.jsx';
@@ -47,7 +49,9 @@ function RoleRoute({ children, allowedRoles = [] }) {
     return <Navigate to="/home" />;
   }
   
-  if (allowedRoles.length > 0 && !allowedRoles.includes(user.role)) {
+  const normalizedRole = String(user.role || '').toUpperCase();
+  const allowed = allowedRoles.map(r => String(r).toUpperCase());
+  if (allowed.length > 0 && !allowed.includes(normalizedRole)) {
     return <Navigate to="/" />;
   }
   
@@ -57,15 +61,15 @@ function RoleRoute({ children, allowedRoles = [] }) {
 function RedirectToRoleHome() {
   const { user } = useAuth();
   if (!user) return <Navigate to="/home" />;
-  switch (user.role) {
-    case 'Admin':
-      return <Navigate to="/admin" />;
-    case 'Manager':
+  switch (String(user.role || '').toUpperCase()) {
+    case 'ADMIN':
+      return <Navigate to="/admin/dashboard" />;
+    case 'MANAGER':
       return <Navigate to="/manager" />;
-    case 'Sales':
+    case 'SALES':
       return <Navigate to="/sales" />;
-    case 'Customer':
-      return <Navigate to="/customer" />;
+    case 'CUSTOMER':
+      return <Navigate to="/customer/home" />;
     default:
       return <Navigate to="/home" />;
   }
@@ -94,6 +98,16 @@ const router = createBrowserRouter([
     errorElement: <ErrorElement />
   },
   {
+    path: "/admin/login",
+    element: <Login />,
+    errorElement: <ErrorElement />
+  },
+  {
+    path: "/customer/login",
+    element: <CustomerLogin />,
+    errorElement: <ErrorElement />
+  },
+  {
     path: "/register", 
     element: <Register />,
     errorElement: <ErrorElement />
@@ -110,7 +124,17 @@ const router = createBrowserRouter([
   {
     path: "/admin",
     element: (
-      <RoleRoute allowedRoles={["Admin"]}>
+      <RoleRoute allowedRoles={["ADMIN"]}>
+        <Layout>
+          <Dashboard />
+        </Layout>
+      </RoleRoute>
+    )
+  },
+  {
+    path: "/admin/dashboard",
+    element: (
+      <RoleRoute allowedRoles={["ADMIN"]}>
         <Layout>
           <Dashboard />
         </Layout>
@@ -120,7 +144,7 @@ const router = createBrowserRouter([
   {
     path: "/manager",
     element: (
-      <RoleRoute allowedRoles={["Manager","Admin"]}>
+      <RoleRoute allowedRoles={["MANAGER","ADMIN"]}>
         <Layout>
           <ManagerDashboard />
         </Layout>
@@ -130,7 +154,7 @@ const router = createBrowserRouter([
   {
     path: "/sales",
     element: (
-      <RoleRoute allowedRoles={["Sales","Manager","Admin"]}>
+      <RoleRoute allowedRoles={["SALES","MANAGER","ADMIN"]}>
         <Layout>
           <SalesDashboard />
         </Layout>
@@ -138,9 +162,27 @@ const router = createBrowserRouter([
     )
   },
   {
+    path: "/customer/signup",
+    element: <CustomerSignup />
+  },
+  {
+    path: "/customer/login",
+    element: <CustomerLogin />
+  },
+  {
     path: "/customer",
     element: (
-      <RoleRoute allowedRoles={["Customer"]}>
+      <RoleRoute allowedRoles={["CUSTOMER"]}>
+        <Layout>
+          <CustomerDashboard />
+        </Layout>
+      </RoleRoute>
+    )
+  },
+  {
+    path: "/customer/home",
+    element: (
+      <RoleRoute allowedRoles={["CUSTOMER"]}>
         <Layout>
           <CustomerDashboard />
         </Layout>
@@ -200,7 +242,7 @@ const router = createBrowserRouter([
   {
     path: "/members",
     element: (
-      <RoleRoute allowedRoles={["Admin", "Manager"]}>
+      <RoleRoute allowedRoles={["ADMIN"]}>
         <Layout>
           <Members />
         </Layout>
@@ -210,7 +252,7 @@ const router = createBrowserRouter([
   {
     path: "/organizations",
     element: (
-      <RoleRoute allowedRoles={["Admin", "Manager"]}>
+      <RoleRoute allowedRoles={["ADMIN"]}>
         <Layout>
           <Organizations />
         </Layout>

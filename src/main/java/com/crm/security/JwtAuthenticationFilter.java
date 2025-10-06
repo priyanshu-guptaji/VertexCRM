@@ -52,21 +52,22 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             logger.debug("JWT Filter - Validating token for user: " + username);
             try {
                 if (jwtConfig.validateToken(jwtToken, username)) {
-                    // Extract role from token and create authorities
+                    // Extract role from token and create authorities (normalize to uppercase)
                     String role = jwtConfig.extractRole(jwtToken);
+                    String roleUpper = role != null ? role.toUpperCase() : "";
                     Long orgId = jwtConfig.extractOrgId(jwtToken);
                     Long memberId = jwtConfig.extractMemberId(jwtToken);
-                    TenantContext.setRole(role);
+                    TenantContext.setRole(roleUpper);
                     TenantContext.setOrgId(orgId);
                     TenantContext.setMemberId(memberId);
-                    List<SimpleGrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_" + role));
+                    List<SimpleGrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_" + roleUpper));
                     
                     UsernamePasswordAuthenticationToken authToken = 
                         new UsernamePasswordAuthenticationToken(username, null, authorities);
                     authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authToken);
                     
-                    logger.debug("JWT Filter - Authentication set for user: " + username + " with role: " + role);
+                    logger.debug("JWT Filter - Authentication set for user: " + username + " with role: " + roleUpper);
                 } else {
                     logger.warn("JWT Filter - Token validation failed for user: " + username);
                 }

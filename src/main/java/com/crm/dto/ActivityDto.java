@@ -32,7 +32,6 @@ public class ActivityDto {
     @Size(max = 50, message = "Priority must not exceed 50 characters")
     private String priority;
     
-    @NotNull(message = "Organization ID is required")
     private Long orgId;
     
     private Long memberId;

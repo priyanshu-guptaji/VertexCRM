@@ -2,6 +2,9 @@ package com.crm.controller;
 
 import com.crm.dto.OrganizationDto;
 import com.crm.service.OrganizationService;
+import com.crm.util.AuthenticationUtils;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.security.core.Authentication;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +21,9 @@ public class OrganizationController {
     @Autowired
     private OrganizationService organizationService;
     
+    @Autowired
+    private AuthenticationUtils authenticationUtils;
+    
     @PostMapping
     public ResponseEntity<?> createOrganization(@Valid @RequestBody OrganizationDto organizationDto) {
         try {
@@ -29,10 +35,11 @@ public class OrganizationController {
     }
     
     @GetMapping
-    public ResponseEntity<?> getAllOrganizations() {
+    public ResponseEntity<?> getMyOrganization(Authentication authentication, HttpServletRequest request) {
         try {
-            List<OrganizationDto> organizations = organizationService.getAllOrganizations();
-            return ResponseEntity.ok(organizations);
+            Long orgId = authenticationUtils.getOrgIdFromAuthentication(authentication, request);
+            OrganizationDto organization = organizationService.getOrganizationById(orgId);
+            return ResponseEntity.ok(java.util.List.of(organization));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error: " + e.getMessage());
         }

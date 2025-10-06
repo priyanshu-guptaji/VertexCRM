@@ -35,20 +35,20 @@ function Layout({ children }) {
   };
 
   const baseNavigation = [
-    { name: 'Leads', href: '/leads', icon: Users, roles: ['Admin','Manager','Sales'] },
-    { name: 'Contacts', href: '/contacts', icon: UserCheck, roles: ['Admin','Manager','Sales'] },
-    { name: 'Accounts', href: '/accounts', icon: Building2, roles: ['Admin','Manager','Sales'] },
-    { name: 'Deals', href: '/deals', icon: HandHeart, roles: ['Admin','Manager','Sales'] },
-    { name: 'Activities', href: '/activities', icon: Calendar, roles: ['Admin','Manager','Sales'] },
+    { name: 'Leads', href: '/leads', icon: Users, roles: ['ADMIN','MANAGER','SALES'] },
+    { name: 'Contacts', href: '/contacts', icon: UserCheck, roles: ['ADMIN','MANAGER','SALES'] },
+    { name: 'Accounts', href: '/accounts', icon: Building2, roles: ['ADMIN','MANAGER','SALES'] },
+    { name: 'Deals', href: '/deals', icon: HandHeart, roles: ['ADMIN','MANAGER','SALES'] },
+    { name: 'Activities', href: '/activities', icon: Calendar, roles: ['ADMIN','MANAGER','SALES'] },
   ];
 
   const customerNavigation = [
-    { name: 'Dashboard', href: '/customer', icon: LayoutDashboard, roles: ['Customer'] },
+    { name: 'Dashboard', href: '/customer/home', icon: LayoutDashboard, roles: ['CUSTOMER'] },
   ];
 
-  const navigation = (user?.role === 'Customer')
+  const navigation = (user?.role === 'CUSTOMER')
     ? customerNavigation
-    : [{ name: 'Dashboard', href: user?.role === 'Admin' ? '/admin' : (user?.role === 'Manager' ? '/manager' : '/sales'), icon: LayoutDashboard }, ...baseNavigation.filter(item => item.roles.includes(user?.role))];
+    : [{ name: 'Dashboard', href: user?.role === 'ADMIN' ? '/admin/dashboard' : (user?.role === 'MANAGER' ? '/manager' : '/sales'), icon: LayoutDashboard }, ...baseNavigation.filter(item => item.roles.includes(user?.role))];
 
   const adminNavigation = [
     { name: 'Members', href: '/members', icon: Users },
@@ -69,7 +69,7 @@ function Layout({ children }) {
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary-600">
               <BarChart3 className="h-5 w-5 text-white" />
             </div>
-            <span className="text-xl font-bold text-secondary-900">CRM Pro</span>
+            <span className="text-xl font-bold text-secondary-900">Vertex CRM</span>
           </div>
           <button
             onClick={() => setSidebarOpen(false)}
@@ -102,7 +102,7 @@ function Layout({ children }) {
             );
           })}
 
-          {user && (user.role === 'Admin' || user.role === 'Manager') && (
+          {user && user.role === 'ADMIN' && (
             <div className="pt-4">
               <div className="px-3 py-2 text-xs font-semibold text-secondary-500 uppercase tracking-wider">
                 Administration

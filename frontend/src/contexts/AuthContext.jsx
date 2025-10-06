@@ -17,12 +17,56 @@ export function AuthProvider({ children }) {
       // Set token in API headers
       api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       
-      // Get user info from token (you might want to decode JWT or make an API call)
-      const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
-      setUser(userInfo);
+      // Get user info and normalize role casing
+      const stored = JSON.parse(localStorage.getItem('userInfo') || '{}');
+      const normalized = stored && stored.role
+        ? { ...stored, role: String(stored.role).toUpperCase() }
+        : stored;
+      setUser(normalized);
+      // Attach multi-tenant hints to every request if available
+      if (normalized && (normalized.orgId || normalized.accountId)) {
+        if (normalized.orgId) api.defaults.headers.common['X-Tenant-Id'] = normalized.orgId;
+        if (normalized.accountId) api.defaults.headers.common['X-Account-Id'] = normalized.accountId;
+      }
+      if (normalized !== stored) {
+        localStorage.setItem('userInfo', JSON.stringify(normalized));
+      }
     }
     setLoading(false);
   }, []);
+
+  // Helper to persist auth data consistently (ADMIN or CUSTOMER)
+  const persistAuth = (payload = {}) => {
+    const {
+      token,
+      memberId,
+      userId,
+      email: userEmail,
+      name,
+      orgId,
+      orgName,
+      accountId,
+      role
+    } = payload;
+    if (!token) return { success: false, error: 'Invalid response from server - no token received' };
+    const roleNormalized = String(role || '').toUpperCase();
+    const nextUser = {
+      memberId: memberId ?? userId,
+      email: userEmail,
+      name,
+      orgId,
+      orgName,
+      accountId: accountId ?? null,
+      role: roleNormalized
+    };
+    localStorage.setItem('token', token);
+    localStorage.setItem('userInfo', JSON.stringify(nextUser));
+    api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    if (nextUser.orgId) api.defaults.headers.common['X-Tenant-Id'] = nextUser.orgId;
+    if (nextUser.accountId) api.defaults.headers.common['X-Account-Id'] = nextUser.accountId;
+    setUser(nextUser);
+    return { success: true, role: roleNormalized, user: nextUser, token };
+  };
 
   const login = async (email, password, tenantHint) => {
     try {
@@ -65,44 +109,9 @@ export function AuthProvider({ children }) {
       const response = await api.post('/auth/login', loginData, {
         headers: tenantHint ? { 'X-Tenant': tenantHint } : {}
       });
-      
       console.log('Login response status:', response.status);
       console.log('Login response data:', response.data);
-      
-      const { token, memberId, email: userEmail, name, orgId, orgName, role } = response.data;
-      
-      if (!token) {
-        return { 
-          success: false, 
-          error: 'Invalid response from server - no token received' 
-        };
-      }
-      
-      // Store token and user info
-      localStorage.setItem('token', token);
-      localStorage.setItem('userInfo', JSON.stringify({
-        memberId,
-        email: userEmail,
-        name,
-        orgId,
-        orgName,
-        role
-      }));
-      
-      // Set token in API headers
-      api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      
-      const nextUser = {
-        memberId,
-        email: userEmail,
-        name,
-        orgId,
-        orgName,
-        role
-      };
-      setUser(nextUser);
-      
-      return { success: true, role: role, user: nextUser };
+      return persistAuth(response.data);
     } catch (error) {
       console.error('Login error details:', {
         message: error.message,
@@ -154,6 +163,27 @@ export function AuthProvider({ children }) {
     }
   };
 
+  // Customer login (returns accountId)
+  const loginCustomer = async (email, password, tenantHint) => {
+    try {
+      if (!email || !password) return { success: false, error: 'Email and password are required' };
+      const response = await api.post('/auth/customer/login', { email: email.trim(), password }, {
+        headers: tenantHint ? { 'X-Tenant': tenantHint } : {}
+      });
+      console.log('Customer login response:', response.data);
+      return persistAuth(response.data);
+    } catch (error) {
+      const status = error.response?.status;
+      const data = error.response?.data;
+      const msg = status === 401 ? 'Invalid credentials'
+        : status === 403 ? 'Access denied'
+        : status === 400 ? (data?.message || 'Invalid login data')
+        : status >= 500 ? 'Server error. Please try again later.'
+        : (data?.message || 'Login failed');
+      return { success: false, error: msg };
+    }
+  };
+
   const register = async (orgName, orgEmail, adminName, adminEmail, adminPassword) => {
     try {
       const response = await api.post('/auth/register', {
@@ -193,17 +223,39 @@ export function AuthProvider({ children }) {
     }
   };
 
+  // Customer signup
+  const registerCustomer = async ({ fullName, email, password, companyName, phone }) => {
+    try {
+      const response = await api.post('/auth/customer/signup', {
+        fullName, email, password, companyName, phone
+      });
+      return { success: true, data: response.data };
+    } catch (error) {
+      const status = error.response?.status;
+      const data = error.response?.data;
+      const msg = status === 409 ? 'Email already exists'
+        : status === 400 ? (data?.message || 'Invalid signup data')
+        : status >= 500 ? 'Server error. Please try again later.'
+        : (data?.message || 'Signup failed');
+      return { success: false, error: msg };
+    }
+  };
+
   const logout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('userInfo');
     delete api.defaults.headers.common['Authorization'];
+    delete api.defaults.headers.common['X-Tenant-Id'];
+    delete api.defaults.headers.common['X-Account-Id'];
     setUser(null);
   };
 
   const value = {
     user,
     login,
+    loginCustomer,
     register,
+    registerCustomer,
     logout,
     loading
   };

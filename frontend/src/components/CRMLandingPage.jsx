@@ -125,9 +125,9 @@ const CRMLandingPage = () => {
               </button>
               
               {isDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 border">
-                  <Link to={"/login"}className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors">Customer Login</Link>
-                  <Link to={"/login"} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors">Admin Login</Link>
+                <div className="absolute right-0 mt-2 w-56 bg-white rounded-md shadow-lg py-2 z-10 border">
+                  <Link to={"/customer/login"} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors">Login as Customer</Link>
+                  <Link to={"/admin/login"} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors">Login as Admin</Link>
                 </div>
               )}
             </div>
@@ -151,8 +151,8 @@ const CRMLandingPage = () => {
               <a href="#pricing" className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600">Pricing</a>
               <a href="#contact" className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600">Contact</a>
               <div className="border-t pt-2">
-                <a href="#" className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600">Customer Login</a>
-                <a href="#" className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600">Admin Login</a>
+                <Link to="/customer/login" className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600">Login as Customer</Link>
+                <Link to="/admin/login" className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600">Login as Admin</Link>
               </div>
             </div>
           </div>

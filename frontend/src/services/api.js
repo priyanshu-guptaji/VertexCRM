@@ -18,6 +18,16 @@ api.interceptors.request.use(
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
+    // Attach tenant header if available
+    try {
+      const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
+      if (userInfo && (userInfo.orgId || userInfo.tenantId)) {
+        const tenantId = userInfo.orgId || userInfo.tenantId;
+        if (tenantId) {
+          config.headers['X-Tenant-Id'] = tenantId;
+        }
+      }
+    } catch {}
     
     // Log request details for debugging
     console.log('API Request:', {

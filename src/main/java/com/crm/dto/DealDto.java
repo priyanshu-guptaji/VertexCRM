@@ -1,6 +1,7 @@
 package com.crm.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.DecimalMin;
@@ -99,12 +100,20 @@ public class DealDto {
         this.dealValue = dealValue;
     }
     
+    @JsonProperty("stage")
     public String getDealStage() {
         return dealStage;
     }
     
+    @JsonProperty("stage")
     public void setDealStage(String dealStage) {
         this.dealStage = dealStage;
+    }
+
+    // Support direct binding for payloads that send { "stage": "..." }
+    @JsonProperty("stage")
+    public void setStage(String stage) {
+        this.dealStage = stage;
     }
     
     public OffsetDateTime getExpectedCloseDate() {
