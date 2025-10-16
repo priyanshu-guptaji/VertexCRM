@@ -1,5 +1,6 @@
 package com.crm.util;
 
+<<<<<<< HEAD
 import com.crm.config.JwtConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -7,12 +8,18 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+=======
+import com.crm.security.TenantContext;
+import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Component;
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
 
 import jakarta.servlet.http.HttpServletRequest;
 
 @Component
 public class AuthenticationUtils {
     
+<<<<<<< HEAD
     @Autowired
     private JwtConfig jwtConfig;
     
@@ -92,6 +99,22 @@ public class AuthenticationUtils {
     private HttpServletRequest getCurrentRequest() {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         return attributes != null ? attributes.getRequest() : null;
+=======
+    public Long getOrgIdFromAuthentication(Authentication authentication, HttpServletRequest request) {
+        Long orgId = TenantContext.getOrgId();
+        if (orgId == null) {
+            throw new IllegalStateException("Missing tenant context (orgId)");
+        }
+        return orgId;
+    }
+    
+    public Long getMemberIdFromAuthentication(Authentication authentication, HttpServletRequest request) {
+        Long memberId = TenantContext.getMemberId();
+        if (memberId == null) {
+            throw new IllegalStateException("Missing tenant context (memberId)");
+        }
+        return memberId;
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
     }
 }
 

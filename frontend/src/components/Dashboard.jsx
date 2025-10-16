@@ -27,7 +27,10 @@ import {
   Cell 
 } from 'recharts';
 import api from '../services/api.js';
+<<<<<<< HEAD
 import toast from 'react-hot-toast';
+=======
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
 
 function Dashboard() {
   const { user } = useAuth();
@@ -43,6 +46,7 @@ function Dashboard() {
   });
   const [loading, setLoading] = useState(true);
   const [recentActivities, setRecentActivities] = useState([]);
+<<<<<<< HEAD
   const [chartData, setChartData] = useState([]);
   const [pieData, setPieData] = useState([]);
 
@@ -53,6 +57,8 @@ function Dashboard() {
   const [leadForm, setLeadForm] = useState({ leadName: '', leadEmail: '', phone: '' });
   const [dealForm, setDealForm] = useState({ dealName: '', description: '', dealValue: '', dealStage: '' });
   const [activityForm, setActivityForm] = useState({ activityType: '', subject: '', description: '', activityDate: '' });
+=======
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
 
   useEffect(() => {
     fetchStats();
@@ -61,25 +67,39 @@ function Dashboard() {
   const fetchStats = async () => {
     try {
       setLoading(true);
+<<<<<<< HEAD
       const [leadsRes, contactsRes, accountsRes, dealsRes, activitiesRes, dealSummaryRes, dealStagesRes] = await Promise.all([
+=======
+      // In a real application, you would have a dedicated stats endpoint
+      // For now, we'll fetch counts from individual endpoints
+      const [leadsRes, contactsRes, accountsRes, dealsRes, activitiesRes] = await Promise.all([
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
         api.get('/leads').catch(() => ({ data: [] })),
         api.get('/contacts').catch(() => ({ data: [] })),
         api.get('/accounts').catch(() => ({ data: [] })),
         api.get('/deals').catch(() => ({ data: [] })),
+<<<<<<< HEAD
         api.get('/activities').catch(() => ({ data: [] })),
         api.get('/deals/summary').catch(() => ({ data: [] })),
         api.get('/deals/stages').catch(() => ({ data: [] }))
+=======
+        api.get('/activities').catch(() => ({ data: [] }))
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
       ]);
 
       const leads = leadsRes.data || [];
       const deals = dealsRes.data || [];
+<<<<<<< HEAD
       const activities = activitiesRes.data || [];
+=======
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
 
       setStats({
         totalLeads: leads.length,
         totalContacts: contactsRes.data?.length || 0,
         totalAccounts: accountsRes.data?.length || 0,
         totalDeals: deals.length,
+<<<<<<< HEAD
         totalActivities: activities.length,
         verifiedLeads: leads.filter(lead => lead.isVerified).length,
         activeDeals: deals.filter(deal => deal.stage !== 'Closed').length,
@@ -154,6 +174,21 @@ function Dashboard() {
         const pie = Object.entries(stageCounts).map(([name, value], idx) => ({ name, value, color: colors[idx % colors.length] }));
         setPieData(pie);
       }
+=======
+        totalActivities: activitiesRes.data?.length || 0,
+        verifiedLeads: leads.filter(lead => lead.isVerified).length,
+        activeDeals: deals.filter(deal => deal.stage !== 'Closed').length,
+        totalValue: deals.reduce((sum, deal) => sum + (deal.value || 0), 0)
+      });
+
+      // Mock recent activities
+      setRecentActivities([
+        { id: 1, type: 'Lead', action: 'New lead added', name: 'John Doe', time: '2 minutes ago' },
+        { id: 2, type: 'Contact', action: 'Contact updated', name: 'Jane Smith', time: '15 minutes ago' },
+        { id: 3, type: 'Deal', action: 'Deal stage changed', name: 'Enterprise Deal', time: '1 hour ago' },
+        { id: 4, type: 'Activity', action: 'Call scheduled', name: 'Follow-up call', time: '2 hours ago' },
+      ]);
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
     } catch (error) {
       console.error('Error fetching stats:', error);
     } finally {
@@ -161,6 +196,7 @@ function Dashboard() {
     }
   };
 
+<<<<<<< HEAD
   const handleCreateLead = async (e) => {
     e.preventDefault();
     try {
@@ -223,6 +259,8 @@ function Dashboard() {
     }
   };
 
+=======
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
   const statCards = [
     {
       title: 'Total Leads',
@@ -250,7 +288,11 @@ function Dashboard() {
     },
     {
       title: 'Total Value',
+<<<<<<< HEAD
       value: `${stats.totalValue.toLocaleString()}`,
+=======
+      value: `$${stats.totalValue.toLocaleString()}`,
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
       change: '+15%',
       changeType: 'positive',
       icon: DollarSign,
@@ -258,6 +300,25 @@ function Dashboard() {
     }
   ];
 
+<<<<<<< HEAD
+=======
+  const chartData = [
+    { name: 'Jan', leads: 65, deals: 28, revenue: 12000 },
+    { name: 'Feb', leads: 59, deals: 48, revenue: 19000 },
+    { name: 'Mar', leads: 80, deals: 40, revenue: 15000 },
+    { name: 'Apr', leads: 81, deals: 19, revenue: 22000 },
+    { name: 'May', leads: 56, deals: 96, revenue: 28000 },
+    { name: 'Jun', leads: 55, deals: 27, revenue: 18000 },
+  ];
+
+  const pieData = [
+    { name: 'New', value: 45, color: '#3b82f6' },
+    { name: 'Qualified', value: 30, color: '#10b981' },
+    { name: 'Proposal', value: 15, color: '#f59e0b' },
+    { name: 'Closed', value: 10, color: '#ef4444' },
+  ];
+
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
@@ -277,7 +338,11 @@ function Dashboard() {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-3xl font-bold mb-2">
+<<<<<<< HEAD
               Welcome , {user?.name}!
+=======
+              Welcome back, {user?.name}!
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
             </h1>
             <p className="text-primary-100 text-lg">
               Here's what's happening with your CRM today
@@ -350,7 +415,11 @@ function Dashboard() {
           className="card"
         >
           <div className="card-header">
+<<<<<<< HEAD
             <h3 className="card-title">Deals Overview</h3>
+=======
+            <h3 className="card-title">Leads & Deals Overview</h3>
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
             <p className="card-description">Monthly performance metrics</p>
           </div>
           <div className="card-content">
@@ -472,6 +541,7 @@ function Dashboard() {
           </div>
           <div className="card-content">
             <div className="space-y-3">
+<<<<<<< HEAD
               <button className="w-full btn btn-primary btn-sm justify-start" onClick={() => setShowLeadModal(true)}>
                 <Plus className="h-4 w-4 mr-2" />
                 Add New Lead
@@ -481,6 +551,25 @@ function Dashboard() {
                 Add Deal
               </button>
               <button className="w-full btn btn-outline btn-sm justify-start" onClick={() => setShowActivityModal(true)}>
+=======
+              <button className="w-full btn btn-primary btn-sm justify-start">
+                <Plus className="h-4 w-4 mr-2" />
+                Add New Lead
+              </button>
+              <button className="w-full btn btn-outline btn-sm justify-start">
+                <UserCheck className="h-4 w-4 mr-2" />
+                Add Contact
+              </button>
+              <button className="w-full btn btn-outline btn-sm justify-start">
+                <Building2 className="h-4 w-4 mr-2" />
+                Add Account
+              </button>
+              <button className="w-full btn btn-outline btn-sm justify-start">
+                <HandHeart className="h-4 w-4 mr-2" />
+                Add Deal
+              </button>
+              <button className="w-full btn btn-outline btn-sm justify-start">
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
                 <Calendar className="h-4 w-4 mr-2" />
                 Schedule Activity
               </button>
@@ -488,6 +577,7 @@ function Dashboard() {
           </div>
         </motion.div>
       </div>
+<<<<<<< HEAD
 
       {/* Lead Modal */}
       {showLeadModal && (
@@ -553,6 +643,8 @@ function Dashboard() {
           </div>
         </div>
       )}
+=======
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
     </div>
   );
 }

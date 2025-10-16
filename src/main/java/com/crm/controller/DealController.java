@@ -11,12 +11,19 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+<<<<<<< HEAD
 import java.util.Map;
 import java.util.HashMap;
+=======
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
 
 @RestController
 @RequestMapping("/api/deals")
 @CrossOrigin(origins = "*")
+<<<<<<< HEAD
+=======
+@org.springframework.security.access.prepost.PreAuthorize("hasAnyRole('ADMIN','MANAGER','SALES')")
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
 public class DealController {
     
     @Autowired
@@ -52,6 +59,7 @@ public class DealController {
             return ResponseEntity.badRequest().body("Error: " + e.getMessage());
         }
     }
+<<<<<<< HEAD
 
     @GetMapping("/summary")
     public ResponseEntity<?> getDealSummary() {
@@ -70,6 +78,8 @@ public class DealController {
             return ResponseEntity.badRequest().body("Error: " + e.getMessage());
         }
     }
+=======
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
     
     @GetMapping("/{dealId}")
     public ResponseEntity<?> getDealById(@PathVariable Long dealId) {

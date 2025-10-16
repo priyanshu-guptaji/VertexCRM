@@ -15,8 +15,11 @@ import com.crm.repository.AccountRepository;
 import com.crm.repository.ContactRepository;
 import com.crm.repository.DealRepository;
 import com.crm.repository.LeadRepository;
+<<<<<<< HEAD
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+=======
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,7 +30,10 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 public class ActivityService {
+<<<<<<< HEAD
     private static final Logger log = LoggerFactory.getLogger(ActivityService.class);
+=======
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
     
     @Autowired
     private ActivityRepository activityRepository;
@@ -104,7 +110,10 @@ public class ActivityService {
         activity.setLead(lead);
         
         Activity savedActivity = activityRepository.save(activity);
+<<<<<<< HEAD
         log.info("Activity saved successfully with ID: {}", savedActivity.getActivityId());
+=======
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
         return convertToDto(savedActivity);
     }
     
@@ -125,12 +134,26 @@ public class ActivityService {
         if (activity == null) {
             throw new RuntimeException("Activity not found");
         }
+<<<<<<< HEAD
+=======
+        Long currentOrgId = com.crm.security.TenantContext.getOrgId();
+        if (currentOrgId == null || !activity.getOrganization().getOrgId().equals(currentOrgId)) {
+            throw new org.springframework.security.access.AccessDeniedException("Access denied to activity");
+        }
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
         return convertToDto(activity);
     }
     
     public ActivityDto updateActivity(Long activityId, ActivityDto activityDto) {
         Activity activity = activityRepository.findById(activityId)
                 .orElseThrow(() -> new RuntimeException("Activity not found"));
+<<<<<<< HEAD
+=======
+        Long currentOrgId = com.crm.security.TenantContext.getOrgId();
+        if (currentOrgId == null || !activity.getOrganization().getOrgId().equals(currentOrgId)) {
+            throw new org.springframework.security.access.AccessDeniedException("Access denied to activity");
+        }
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
         
         activity.setActivityType(activityDto.getActivityType());
         activity.setSubject(activityDto.getSubject());
@@ -168,10 +191,20 @@ public class ActivityService {
     }
     
     public void deleteActivity(Long activityId) {
+<<<<<<< HEAD
         if (!activityRepository.existsById(activityId)) {
             throw new RuntimeException("Activity not found");
         }
         activityRepository.deleteById(activityId);
+=======
+        Activity activity = activityRepository.findById(activityId)
+                .orElseThrow(() -> new RuntimeException("Activity not found"));
+        Long currentOrgId = com.crm.security.TenantContext.getOrgId();
+        if (currentOrgId == null || !activity.getOrganization().getOrgId().equals(currentOrgId)) {
+            throw new org.springframework.security.access.AccessDeniedException("Access denied to activity");
+        }
+        activityRepository.delete(activity);
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
     }
     
     private ActivityDto convertToDto(Activity activity) {

@@ -2,7 +2,10 @@ package com.crm.config;
 
 import com.crm.security.JwtAuthenticationEntryPoint;
 import com.crm.security.JwtAuthenticationFilter;
+<<<<<<< HEAD
 import com.crm.tenant.TenantFilter;
+=======
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -33,9 +36,12 @@ public class SecurityConfig {
     @Autowired
     private JwtAuthenticationFilter jwtAuthenticationFilter;
 
+<<<<<<< HEAD
     @Autowired
     private TenantFilter tenantFilter;
 
+=======
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -59,8 +65,11 @@ public class SecurityConfig {
             .exceptionHandling(ex -> ex.authenticationEntryPoint(jwtAuthenticationEntryPoint))
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
+<<<<<<< HEAD
         // Ensure tenant is resolved before JWT auth and username/password filters
         http.addFilterBefore(tenantFilter, UsernamePasswordAuthenticationFilter.class);
+=======
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
@@ -69,7 +78,11 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         
+<<<<<<< HEAD
         // Allow your React frontend origins (dev and possible vite preview)
+=======
+        // Allow your React frontend origins (dev: CRA 3000 and Vite 5173)
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
         configuration.setAllowedOrigins(Arrays.asList(
                 "http://localhost:3000",
                 "http://127.0.0.1:3000",

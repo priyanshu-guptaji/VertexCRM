@@ -83,12 +83,26 @@ public class AccountService {
         if (account == null) {
             throw new RuntimeException("Account not found");
         }
+<<<<<<< HEAD
+=======
+        Long currentOrgId = com.crm.security.TenantContext.getOrgId();
+        if (currentOrgId == null || !account.getOrganization().getOrgId().equals(currentOrgId)) {
+            throw new org.springframework.security.access.AccessDeniedException("Access denied to account");
+        }
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
         return convertToDto(account);
     }
     
     public AccountDto updateAccount(Long accountId, AccountDto accountDto) {
         Account account = accountRepository.findById(accountId)
                 .orElseThrow(() -> new RuntimeException("Account not found"));
+<<<<<<< HEAD
+=======
+        Long currentOrgId = com.crm.security.TenantContext.getOrgId();
+        if (currentOrgId == null || !account.getOrganization().getOrgId().equals(currentOrgId)) {
+            throw new org.springframework.security.access.AccessDeniedException("Access denied to account");
+        }
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
         
         // Check if email already exists for another account
         if (accountDto.getEmail() != null && !accountDto.getEmail().equals(account.getEmail()) 
@@ -113,10 +127,20 @@ public class AccountService {
     }
     
     public void deleteAccount(Long accountId) {
+<<<<<<< HEAD
         if (!accountRepository.existsById(accountId)) {
             throw new RuntimeException("Account not found");
         }
         accountRepository.deleteById(accountId);
+=======
+        Account account = accountRepository.findById(accountId)
+                .orElseThrow(() -> new RuntimeException("Account not found"));
+        Long currentOrgId = com.crm.security.TenantContext.getOrgId();
+        if (currentOrgId == null || !account.getOrganization().getOrgId().equals(currentOrgId)) {
+            throw new org.springframework.security.access.AccessDeniedException("Access denied to account");
+        }
+        accountRepository.delete(account);
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
     }
     
     private AccountDto convertToDto(Account account) {

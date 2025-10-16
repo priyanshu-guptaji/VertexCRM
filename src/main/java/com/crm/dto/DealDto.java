@@ -1,6 +1,10 @@
 package com.crm.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+<<<<<<< HEAD
+=======
+import com.fasterxml.jackson.annotation.JsonProperty;
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.DecimalMin;
@@ -99,13 +103,30 @@ public class DealDto {
         this.dealValue = dealValue;
     }
     
+<<<<<<< HEAD
+=======
+    @JsonProperty("stage")
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
     public String getDealStage() {
         return dealStage;
     }
     
+<<<<<<< HEAD
     public void setDealStage(String dealStage) {
         this.dealStage = dealStage;
     }
+=======
+    @JsonProperty("stage")
+    public void setDealStage(String dealStage) {
+        this.dealStage = dealStage;
+    }
+
+    // Support direct binding for payloads that send { "stage": "..." }
+    @JsonProperty("stage")
+    public void setStage(String stage) {
+        this.dealStage = stage;
+    }
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
     
     public OffsetDateTime getExpectedCloseDate() {
         return expectedCloseDate;

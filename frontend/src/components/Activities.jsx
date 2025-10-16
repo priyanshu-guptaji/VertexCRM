@@ -64,10 +64,15 @@ function Activities() {
   const fetchActivities = async () => {
     try {
       setLoading(true);
+<<<<<<< HEAD
       console.log('Fetching activities...');
       const response = await api.get('/activities');
       setActivities(response.data);
       console.log('Activities fetched successfully:', response.data);
+=======
+      const response = await api.get('/activities');
+      setActivities(response.data);
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
     } catch (error) {
       console.error('Error fetching activities:', error);
       toast.error('Failed to fetch activities');
@@ -112,6 +117,7 @@ function Activities() {
     }
   };
 
+<<<<<<< HEAD
   const formatLocalDateTime = (value) => {
     if (!value) return '';
     // value is from <input type="datetime-local">, e.g. "2025-10-08T14:30"
@@ -158,11 +164,36 @@ function Activities() {
         await api.post('/activities', activityData);
         toast.success('Activity created successfully');
         console.log('Activity created successfully!');
+=======
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const activityData = {
+        ...formData,
+        activityDate: formData.activityDate ? new Date(formData.activityDate).toISOString() : null,
+        accountId: formData.accountId ? parseInt(formData.accountId) : null,
+        contactId: formData.contactId ? parseInt(formData.contactId) : null,
+        dealId: formData.dealId ? parseInt(formData.dealId) : null,
+        leadId: formData.leadId ? parseInt(formData.leadId) : null
+      };
+
+      console.log('Submitting activity payload:', activityData);
+      if (editingActivity) {
+        await api.put(`/activities/${editingActivity.activityId}`, activityData);
+        toast.success('Activity updated successfully');
+      } else {
+        await api.post('/activities', activityData);
+        toast.success('Activity created successfully');
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
       }
       setShowModal(false);
       setEditingActivity(null);
       resetForm();
+<<<<<<< HEAD
       await fetchActivities();
+=======
+      fetchActivities();
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
     } catch (error) {
       console.error('Error saving activity:', error);
       toast.error('Failed to save activity');
@@ -175,8 +206,12 @@ function Activities() {
       activityType: activity.activityType || '',
       subject: activity.subject || '',
       description: activity.description || '',
+<<<<<<< HEAD
       // Convert to input-friendly "yyyy-MM-ddTHH:mm" (no seconds)
       activityDate: activity.activityDate ? new Date(activity.activityDate).toISOString().slice(0,16) : '',
+=======
+      activityDate: activity.activityDate ? new Date(activity.activityDate).toISOString().split('T')[0] : '',
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
       status: activity.status || '',
       priority: activity.priority || '',
       accountId: activity.accountId?.toString() || '',

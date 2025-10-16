@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\repository\MemberRepository.java
 D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\repository\OrganizationRepository.java
 D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\service\KnowledgeBaseService.java
@@ -76,3 +77,59 @@ D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\controller\TicketControlle
 D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\entity\Ticket.java
 D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\config\JwtConfig.java
 D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\service\LeadService.java
+=======
+C:\Users\priya\OneDrive\Desktop\CRM-Test-main\src\main\java\com\crm\dto\MemberDto.java
+C:\Users\priya\OneDrive\Desktop\CRM-Test-main\src\main\java\com\crm\repository\RoleRepository.java
+C:\Users\priya\OneDrive\Desktop\CRM-Test-main\src\main\java\com\crm\service\LeadService.java
+C:\Users\priya\OneDrive\Desktop\CRM-Test-main\src\main\java\com\crm\dto\ContactDto.java
+C:\Users\priya\OneDrive\Desktop\CRM-Test-main\src\main\java\com\crm\config\GlobalExceptionHandler.java
+C:\Users\priya\OneDrive\Desktop\CRM-Test-main\src\main\java\com\crm\entity\Member.java
+C:\Users\priya\OneDrive\Desktop\CRM-Test-main\src\main\java\com\crm\MultiTenantCrmApplication.java
+C:\Users\priya\OneDrive\Desktop\CRM-Test-main\src\main\java\com\crm\entity\Lead.java
+C:\Users\priya\OneDrive\Desktop\CRM-Test-main\src\main\java\com\crm\service\DealService.java
+C:\Users\priya\OneDrive\Desktop\CRM-Test-main\src\main\java\com\crm\dto\JwtResponse.java
+C:\Users\priya\OneDrive\Desktop\CRM-Test-main\src\main\java\com\crm\controller\DealController.java
+C:\Users\priya\OneDrive\Desktop\CRM-Test-main\src\main\java\com\crm\service\MemberService.java
+C:\Users\priya\OneDrive\Desktop\CRM-Test-main\src\main\java\com\crm\config\JacksonConfig.java
+C:\Users\priya\OneDrive\Desktop\CRM-Test-main\src\main\java\com\crm\repository\LeadRepository.java
+C:\Users\priya\OneDrive\Desktop\CRM-Test-main\src\main\java\com\crm\controller\RoleController.java
+C:\Users\priya\OneDrive\Desktop\CRM-Test-main\src\main\java\com\crm\security\JwtAuthenticationFilter.java
+C:\Users\priya\OneDrive\Desktop\CRM-Test-main\src\main\java\com\crm\config\JwtConfig.java
+C:\Users\priya\OneDrive\Desktop\CRM-Test-main\src\main\java\com\crm\config\SecurityConfig.java
+C:\Users\priya\OneDrive\Desktop\CRM-Test-main\src\main\java\com\crm\repository\DealRepository.java
+C:\Users\priya\OneDrive\Desktop\CRM-Test-main\src\main\java\com\crm\dto\DealDto.java
+C:\Users\priya\OneDrive\Desktop\CRM-Test-main\src\main\java\com\crm\service\AuthService.java
+C:\Users\priya\OneDrive\Desktop\CRM-Test-main\src\main\java\com\crm\controller\MemberController.java
+C:\Users\priya\OneDrive\Desktop\CRM-Test-main\src\main\java\com\crm\controller\LeadController.java
+C:\Users\priya\OneDrive\Desktop\CRM-Test-main\src\main\java\com\crm\entity\Contact.java
+C:\Users\priya\OneDrive\Desktop\CRM-Test-main\src\main\java\com\crm\entity\Organization.java
+C:\Users\priya\OneDrive\Desktop\CRM-Test-main\src\main\java\com\crm\entity\Account.java
+C:\Users\priya\OneDrive\Desktop\CRM-Test-main\src\main\java\com\crm\entity\Deal.java
+C:\Users\priya\OneDrive\Desktop\CRM-Test-main\src\main\java\com\crm\dto\ActivityDto.java
+C:\Users\priya\OneDrive\Desktop\CRM-Test-main\src\main\java\com\crm\repository\OrganizationRepository.java
+C:\Users\priya\OneDrive\Desktop\CRM-Test-main\src\main\java\com\crm\controller\ActivityController.java
+C:\Users\priya\OneDrive\Desktop\CRM-Test-main\src\main\java\com\crm\dto\AccountDto.java
+C:\Users\priya\OneDrive\Desktop\CRM-Test-main\src\main\java\com\crm\repository\ActivityRepository.java
+C:\Users\priya\OneDrive\Desktop\CRM-Test-main\src\main\java\com\crm\service\OrganizationService.java
+C:\Users\priya\OneDrive\Desktop\CRM-Test-main\src\main\java\com\crm\service\ActivityService.java
+C:\Users\priya\OneDrive\Desktop\CRM-Test-main\src\main\java\com\crm\service\SimpleAuthService.java
+C:\Users\priya\OneDrive\Desktop\CRM-Test-main\src\main\java\com\crm\repository\AccountRepository.java
+C:\Users\priya\OneDrive\Desktop\CRM-Test-main\src\main\java\com\crm\security\JwtAuthenticationEntryPoint.java
+C:\Users\priya\OneDrive\Desktop\CRM-Test-main\src\main\java\com\crm\controller\OrganizationController.java
+C:\Users\priya\OneDrive\Desktop\CRM-Test-main\src\main\java\com\crm\dto\UserResponseDto.java
+C:\Users\priya\OneDrive\Desktop\CRM-Test-main\src\main\java\com\crm\repository\ContactRepository.java
+C:\Users\priya\OneDrive\Desktop\CRM-Test-main\src\main\java\com\crm\service\ContactService.java
+C:\Users\priya\OneDrive\Desktop\CRM-Test-main\src\main\java\com\crm\controller\AuthController.java
+C:\Users\priya\OneDrive\Desktop\CRM-Test-main\src\main\java\com\crm\service\AccountService.java
+C:\Users\priya\OneDrive\Desktop\CRM-Test-main\src\main\java\com\crm\dto\LeadDto.java
+C:\Users\priya\OneDrive\Desktop\CRM-Test-main\src\main\java\com\crm\controller\AccountController.java
+C:\Users\priya\OneDrive\Desktop\CRM-Test-main\src\main\java\com\crm\security\TenantContext.java
+C:\Users\priya\OneDrive\Desktop\CRM-Test-main\src\main\java\com\crm\service\DataInitializationService.java
+C:\Users\priya\OneDrive\Desktop\CRM-Test-main\src\main\java\com\crm\controller\ContactController.java
+C:\Users\priya\OneDrive\Desktop\CRM-Test-main\src\main\java\com\crm\dto\OrganizationDto.java
+C:\Users\priya\OneDrive\Desktop\CRM-Test-main\src\main\java\com\crm\entity\Role.java
+C:\Users\priya\OneDrive\Desktop\CRM-Test-main\src\main\java\com\crm\repository\MemberRepository.java
+C:\Users\priya\OneDrive\Desktop\CRM-Test-main\src\main\java\com\crm\dto\LoginRequest.java
+C:\Users\priya\OneDrive\Desktop\CRM-Test-main\src\main\java\com\crm\entity\Activity.java
+C:\Users\priya\OneDrive\Desktop\CRM-Test-main\src\main\java\com\crm\util\AuthenticationUtils.java
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80

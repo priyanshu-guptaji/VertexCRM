@@ -15,10 +15,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+<<<<<<< HEAD
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+=======
+import java.util.List;
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
 import java.util.stream.Collectors;
 
 @Service
@@ -101,6 +105,7 @@ public class DealService {
         if (deal == null) {
             throw new RuntimeException("Deal not found");
         }
+<<<<<<< HEAD
         return convertToDto(deal);
     }
 
@@ -130,10 +135,25 @@ public class DealService {
         }
         return result;
     }
+=======
+        Long currentOrgId = com.crm.security.TenantContext.getOrgId();
+        if (currentOrgId == null || !deal.getOrganization().getOrgId().equals(currentOrgId)) {
+            throw new org.springframework.security.access.AccessDeniedException("Access denied to deal");
+        }
+        return convertToDto(deal);
+    }
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
     
     public DealDto updateDeal(Long dealId, DealDto dealDto) {
         Deal deal = dealRepository.findById(dealId)
                 .orElseThrow(() -> new RuntimeException("Deal not found"));
+<<<<<<< HEAD
+=======
+        Long currentOrgId = com.crm.security.TenantContext.getOrgId();
+        if (currentOrgId == null || !deal.getOrganization().getOrgId().equals(currentOrgId)) {
+            throw new org.springframework.security.access.AccessDeniedException("Access denied to deal");
+        }
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
         
         deal.setDealName(dealDto.getDealName());
         deal.setDescription(dealDto.getDescription());
@@ -160,10 +180,20 @@ public class DealService {
     }
     
     public void deleteDeal(Long dealId) {
+<<<<<<< HEAD
         if (!dealRepository.existsById(dealId)) {
             throw new RuntimeException("Deal not found");
         }
         dealRepository.deleteById(dealId);
+=======
+        Deal deal = dealRepository.findById(dealId)
+                .orElseThrow(() -> new RuntimeException("Deal not found"));
+        Long currentOrgId = com.crm.security.TenantContext.getOrgId();
+        if (currentOrgId == null || !deal.getOrganization().getOrgId().equals(currentOrgId)) {
+            throw new org.springframework.security.access.AccessDeniedException("Access denied to deal");
+        }
+        dealRepository.delete(deal);
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
     }
     
     private DealDto convertToDto(Deal deal) {

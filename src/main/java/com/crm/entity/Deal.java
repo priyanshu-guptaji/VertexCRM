@@ -33,7 +33,11 @@ public class Deal {
     
     @NotBlank(message = "Deal stage is required")
     @Size(max = 50, message = "Deal stage must not exceed 50 characters")
+<<<<<<< HEAD
     @Column(name = "deal_stage", nullable = false)
+=======
+    @Column(name = "stage", nullable = false)
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
     private String dealStage;
     
     @Column(name = "expected_close_date")

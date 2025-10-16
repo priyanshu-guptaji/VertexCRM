@@ -19,7 +19,11 @@ public class Activity {
     
     @NotBlank(message = "Activity type is required")
     @Size(max = 50, message = "Activity type must not exceed 50 characters")
+<<<<<<< HEAD
     @Column(name = "type", nullable = false)
+=======
+    @Column(name = "activity_type", nullable = false)
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
     private String activityType;
     
     @NotBlank(message = "Activity subject is required")

@@ -82,6 +82,13 @@ public class LeadService {
         if (lead == null) {
             throw new RuntimeException("Lead not found");
         }
+<<<<<<< HEAD
+=======
+        Long currentOrgId = com.crm.security.TenantContext.getOrgId();
+        if (currentOrgId == null || !lead.getOrganization().getOrgId().equals(currentOrgId)) {
+            throw new org.springframework.security.access.AccessDeniedException("Access denied to lead");
+        }
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
         return convertToDto(lead);
     }
     
@@ -89,6 +96,13 @@ public class LeadService {
     public LeadDto updateLead(Long leadId, LeadDto leadDto) {
         Lead lead = leadRepository.findById(leadId)
                 .orElseThrow(() -> new RuntimeException("Lead not found"));
+<<<<<<< HEAD
+=======
+        Long currentOrgId = com.crm.security.TenantContext.getOrgId();
+        if (currentOrgId == null || !lead.getOrganization().getOrgId().equals(currentOrgId)) {
+            throw new org.springframework.security.access.AccessDeniedException("Access denied to lead");
+        }
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
         
         lead.setLeadName(leadDto.getLeadName());
         lead.setLeadEmail(leadDto.getLeadEmail());
@@ -104,10 +118,20 @@ public class LeadService {
     
     @Transactional
     public void deleteLead(Long leadId) {
+<<<<<<< HEAD
         if (!leadRepository.existsById(leadId)) {
             throw new RuntimeException("Lead not found");
         }
         leadRepository.deleteById(leadId);
+=======
+        Lead lead = leadRepository.findById(leadId)
+                .orElseThrow(() -> new RuntimeException("Lead not found"));
+        Long currentOrgId = com.crm.security.TenantContext.getOrgId();
+        if (currentOrgId == null || !lead.getOrganization().getOrgId().equals(currentOrgId)) {
+            throw new org.springframework.security.access.AccessDeniedException("Access denied to lead");
+        }
+        leadRepository.delete(lead);
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
     }
     
     @Transactional

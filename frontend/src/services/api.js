@@ -18,6 +18,7 @@ api.interceptors.request.use(
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
+<<<<<<< HEAD
     // Attach tenant header from env or subdomain
     const envTenant = import.meta.env?.VITE_TENANT_ID;
     let tenant = envTenant;
@@ -34,6 +35,18 @@ api.interceptors.request.use(
     if (tenant) {
       config.headers['X-Tenant-ID'] = String(tenant).trim().toLowerCase().replace(/[^a-z0-9_]+/g, '_');
     }
+=======
+    // Attach tenant header if available
+    try {
+      const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
+      if (userInfo && (userInfo.orgId || userInfo.tenantId)) {
+        const tenantId = userInfo.orgId || userInfo.tenantId;
+        if (tenantId) {
+          config.headers['X-Tenant-Id'] = tenantId;
+        }
+      }
+    } catch {}
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
     
     // Log request details for debugging
     console.log('API Request:', {
@@ -67,6 +80,7 @@ api.interceptors.response.use(
   },
   (error) => {
     // Log error responses for debugging with backend message
+<<<<<<< HEAD
     let backendMessage;
     if (typeof error.response?.data === 'string') {
       backendMessage = error.response.data;
@@ -77,6 +91,11 @@ api.interceptors.response.use(
     } else {
       backendMessage = JSON.stringify(error.response?.data);
     }
+=======
+    const backendMessage = typeof error.response?.data === 'string'
+      ? error.response.data
+      : (error.response?.data?.message || error.response?.data?.error || (error.response?.data ? JSON.stringify(error.response.data) : error.message));
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
 
     console.error('API Response Error:', {
       status: error.response?.status,
@@ -86,6 +105,17 @@ api.interceptors.response.use(
       message: error.message
     });
     
+<<<<<<< HEAD
+=======
+    // Normalize a user-facing message to avoid passing objects into React nodes
+    error.userMessage = backendMessage;
+
+    // Avoid components accidentally rendering an object by ensuring data is a string when it's an error payload
+    if (error.response && typeof error.response.data !== 'string') {
+      error.response.data = backendMessage;
+    }
+
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
     if (!error.response) {
       // Network or CORS error
       error.userMessage = 'Backend is not reachable. Please check if the server is running.';
@@ -104,6 +134,7 @@ api.interceptors.response.use(
 );
 
 export default api;
+<<<<<<< HEAD
 
 // ========== Sales Automation APIs ==========
 
@@ -234,3 +265,5 @@ export const checkPermission = (resource, action) =>
 export const checkPermissionByName = (permissionName) => 
   api.post('/rbac/check-permission-by-name', { permissionName });
 
+=======
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80

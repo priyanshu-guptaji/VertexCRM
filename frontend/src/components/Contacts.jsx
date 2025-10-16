@@ -1,8 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Plus, Edit, Trash2, Users } from 'lucide-react';
 import api from '../services/api.js';
+<<<<<<< HEAD
 
 function Contacts() {
+=======
+import { useAuth } from '../contexts/AuthContext.jsx';
+
+function Contacts() {
+  const { user } = useAuth();
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
   const [contacts, setContacts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
@@ -102,6 +109,7 @@ function Contacts() {
             <p className="text-secondary-600">Manage your customer contacts</p>
           </div>
         </div>
+<<<<<<< HEAD
         <button
           onClick={() => setShowModal(true)}
           className="btn btn-primary btn-md flex items-center space-x-2"
@@ -109,6 +117,17 @@ function Contacts() {
           <Plus className="h-4 w-4" />
           <span>Add Contact</span>
         </button>
+=======
+        {user?.role === 'ADMIN' && (
+          <button
+            onClick={() => setShowModal(true)}
+            className="btn btn-primary btn-md flex items-center space-x-2"
+          >
+            <Plus className="h-4 w-4" />
+            <span>Add Contact</span>
+          </button>
+        )}
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
       </div>
 
       {/* Error Alert */}

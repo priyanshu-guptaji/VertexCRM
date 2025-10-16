@@ -104,6 +104,13 @@ public class ContactService {
         if (contact == null) {
             throw new RuntimeException("Contact not found");
         }
+<<<<<<< HEAD
+=======
+        Long currentOrgId = com.crm.security.TenantContext.getOrgId();
+        if (currentOrgId == null || !contact.getOrganization().getOrgId().equals(currentOrgId)) {
+            throw new org.springframework.security.access.AccessDeniedException("Access denied to contact");
+        }
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
         return convertToDto(contact);
     }
     
@@ -111,6 +118,13 @@ public class ContactService {
     public ContactDto updateContact(Long contactId, ContactDto contactDto) {
         Contact contact = contactRepository.findById(contactId)
                 .orElseThrow(() -> new RuntimeException("Contact not found"));
+<<<<<<< HEAD
+=======
+        Long currentOrgId = com.crm.security.TenantContext.getOrgId();
+        if (currentOrgId == null || !contact.getOrganization().getOrgId().equals(currentOrgId)) {
+            throw new org.springframework.security.access.AccessDeniedException("Access denied to contact");
+        }
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
         
         contact.setContactName(contactDto.getContactName());
         contact.setContactEmail(contactDto.getContactEmail());
@@ -128,10 +142,20 @@ public class ContactService {
     
     @Transactional
     public void deleteContact(Long contactId) {
+<<<<<<< HEAD
         if (!contactRepository.existsById(contactId)) {
             throw new RuntimeException("Contact not found");
         }
         contactRepository.deleteById(contactId);
+=======
+        Contact contact = contactRepository.findById(contactId)
+                .orElseThrow(() -> new RuntimeException("Contact not found"));
+        Long currentOrgId = com.crm.security.TenantContext.getOrgId();
+        if (currentOrgId == null || !contact.getOrganization().getOrgId().equals(currentOrgId)) {
+            throw new org.springframework.security.access.AccessDeniedException("Access denied to contact");
+        }
+        contactRepository.delete(contact);
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
     }
     
     private ContactDto convertToDto(Contact contact) {

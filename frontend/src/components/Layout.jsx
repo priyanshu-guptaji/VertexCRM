@@ -34,6 +34,7 @@ function Layout({ children }) {
     return location.pathname === path;
   };
 
+<<<<<<< HEAD
   const navigation = [
     { name: 'Dashboard', href: '/', icon: LayoutDashboard },
     { name: 'Leads', href: '/leads', icon: Users },
@@ -43,6 +44,24 @@ function Layout({ children }) {
     { name: 'Activities', href: '/activities', icon: Calendar },
   ];
 
+=======
+  const baseNavigation = [
+    { name: 'Leads', href: '/leads', icon: Users, roles: ['ADMIN','MANAGER','SALES'] },
+    { name: 'Contacts', href: '/contacts', icon: UserCheck, roles: ['ADMIN','MANAGER','SALES'] },
+    { name: 'Accounts', href: '/accounts', icon: Building2, roles: ['ADMIN','MANAGER','SALES'] },
+    { name: 'Deals', href: '/deals', icon: HandHeart, roles: ['ADMIN','MANAGER','SALES'] },
+    { name: 'Activities', href: '/activities', icon: Calendar, roles: ['ADMIN','MANAGER','SALES'] },
+  ];
+
+  const customerNavigation = [
+    { name: 'Dashboard', href: '/customer/home', icon: LayoutDashboard, roles: ['CUSTOMER'] },
+  ];
+
+  const navigation = (user?.role === 'CUSTOMER')
+    ? customerNavigation
+    : [{ name: 'Dashboard', href: user?.role === 'ADMIN' ? '/admin/dashboard' : (user?.role === 'MANAGER' ? '/manager' : '/sales'), icon: LayoutDashboard }, ...baseNavigation.filter(item => item.roles.includes(user?.role))];
+
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
   const adminNavigation = [
     { name: 'Members', href: '/members', icon: Users },
     { name: 'Organizations', href: '/organizations', icon: Building2 },
@@ -62,7 +81,11 @@ function Layout({ children }) {
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary-600">
               <BarChart3 className="h-5 w-5 text-white" />
             </div>
+<<<<<<< HEAD
             <span className="text-xl font-bold text-secondary-900">VertexCRM</span>
+=======
+            <span className="text-xl font-bold text-secondary-900">Vertex CRM</span>
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
           </div>
           <button
             onClick={() => setSidebarOpen(false)}
@@ -95,7 +118,11 @@ function Layout({ children }) {
             );
           })}
 
+<<<<<<< HEAD
           {user && user.role === 'Admin' && (
+=======
+          {user && user.role === 'ADMIN' && (
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
             <div className="pt-4">
               <div className="px-3 py-2 text-xs font-semibold text-secondary-500 uppercase tracking-wider">
                 Administration
@@ -126,7 +153,11 @@ function Layout({ children }) {
 
         {/* User Profile */}
         <div className="border-t border-secondary-200 p-4">
+<<<<<<< HEAD
           <div className="flex items-center space-x-3">
+=======
+            <div className="flex items-center space-x-3">
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary-100">
               <span className="text-sm font-medium text-primary-700">
                 {user?.name?.charAt(0) || 'U'}
@@ -139,6 +170,12 @@ function Layout({ children }) {
               <p className="text-xs text-secondary-500 truncate">
                 {user?.orgName}
               </p>
+<<<<<<< HEAD
+=======
+              <p className="text-xs text-secondary-500 truncate">
+                Role: {user?.role}
+              </p>
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
             </div>
             <button
               onClick={handleLogout}
@@ -180,7 +217,11 @@ function Layout({ children }) {
       {/* Main content */}
       <div className="flex flex-1 flex-col overflow-hidden">
         {/* Top navigation */}
+<<<<<<< HEAD
         {/* <header className="bg-white shadow-sm border-b border-secondary-200">
+=======
+        <header className="bg-white shadow-sm border-b border-secondary-200">
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
           <div className="flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
             <div className="flex items-center">
               <button
@@ -198,7 +239,11 @@ function Layout({ children }) {
 
             <div className="flex items-center space-x-4">
               {/* Search */}
+<<<<<<< HEAD
               {/* <div className="hidden md:block">
+=======
+              <div className="hidden md:block">
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
                 <div className="relative">
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-secondary-400" />
                   <input
@@ -207,6 +252,7 @@ function Layout({ children }) {
                     className="pl-10 pr-4 py-2 border border-secondary-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                   />
                 </div>
+<<<<<<< HEAD
               </div> */}
 
               {/* Notifications */}
@@ -216,12 +262,28 @@ function Layout({ children }) {
 
               {/* Quick Add */}
               {/* <button className="btn btn-primary btn-sm">
+=======
+              </div>
+
+              {/* Notifications */}
+              <button className="p-2 text-secondary-400 hover:text-secondary-600 hover:bg-secondary-100 rounded-lg transition-colors">
+                <Bell className="h-5 w-5" />
+              </button>
+
+              {/* Quick Add */}
+              <button className="btn btn-primary btn-sm">
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
                 <Plus className="h-4 w-4 mr-2" />
                 Quick Add
               </button>
             </div>
+<<<<<<< HEAD
           </div> */}
         {/* </header>} */}
+=======
+          </div>
+        </header>
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
 
         {/* Page content */}
         <main className="flex-1 overflow-y-auto">

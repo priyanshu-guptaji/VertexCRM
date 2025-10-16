@@ -103,7 +103,11 @@ const CRMLandingPage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
+<<<<<<< HEAD
               <h1 className="text-2xl font-bold text-gray-900">VertexCRM</h1>
+=======
+              <h1 className="text-2xl font-bold text-gray-900">Vertex CRM</h1>
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
             </div>
 
             <div className="hidden md:block">
@@ -125,9 +129,15 @@ const CRMLandingPage = () => {
               </button>
               
               {isDropdownOpen && (
+<<<<<<< HEAD
                 <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 border">
                   {/* <Link to={"/login"}className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors">Customer Login</Link> */}
                   <Link to={"/login"} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors">Admin Login</Link>
+=======
+                <div className="absolute right-0 mt-2 w-56 bg-white rounded-md shadow-lg py-2 z-10 border">
+                  <Link to={"/customer/login"} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors">Login as Customer</Link>
+                  <Link to={"/admin/login"} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors">Login as Admin</Link>
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
                 </div>
               )}
             </div>
@@ -151,8 +161,13 @@ const CRMLandingPage = () => {
               <a href="#pricing" className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600">Pricing</a>
               <a href="#contact" className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600">Contact</a>
               <div className="border-t pt-2">
+<<<<<<< HEAD
                 <a href="#" className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600">Customer Login</a>
                 <a href="#" className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600">Admin Login</a>
+=======
+                <Link to="/customer/login" className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600">Login as Customer</Link>
+                <Link to="/admin/login" className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600">Login as Admin</Link>
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
               </div>
             </div>
           </div>
@@ -255,7 +270,11 @@ const CRMLandingPage = () => {
                   <YAxis label={{ value: 'Minutes', angle: -90, position: 'insideLeft' }} />
                   <Tooltip />
                   <Bar dataKey="manual" fill="#EF4444" name="Manual Process" />
+<<<<<<< HEAD
                   <Bar dataKey="automated" fill="#10B981" name="With VertexCRM" />
+=======
+                  <Bar dataKey="automated" fill="#10B981" name="With Vertex CRM" />
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -308,8 +327,13 @@ const CRMLandingPage = () => {
                     <XAxis dataKey="month" />
                     <YAxis tickFormatter={(value) => `$${value/1000}k`} />
                     <Tooltip formatter={(value) => [`$${value.toLocaleString()}`, '']} />
+<<<<<<< HEAD
                     <Line type="monotone" dataKey="before" stroke="#EF4444" strokeWidth={3} name="Before VertexCRM" />
                     <Line type="monotone" dataKey="after" stroke="#10B981" strokeWidth={3} name="After VertexCRM" />
+=======
+                    <Line type="monotone" dataKey="before" stroke="#EF4444" strokeWidth={3} name="Before Vertex CRM" />
+                    <Line type="monotone" dataKey="after" stroke="#10B981" strokeWidth={3} name="After Vertex CRM" />
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
                   </LineChart>
                 </ResponsiveContainer>
               </div>
@@ -416,7 +440,11 @@ const CRMLandingPage = () => {
             Ready to 10x Your Revenue?
           </h2>
           <p className="text-xl text-blue-100 mb-8">
+<<<<<<< HEAD
             Join 10,000+ companies growing with VertexCRM
+=======
+            Join 10,000+ companies growing with Vertex CRM
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <button className="bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold hover:bg-gray-50 transform hover:scale-105 transition-all duration-200 shadow-lg flex items-center">
@@ -435,7 +463,11 @@ const CRMLandingPage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
+<<<<<<< HEAD
               <h3 className="text-2xl font-bold mb-4">VertexCRM</h3>
+=======
+              <h3 className="text-2xl font-bold mb-4">Vertex CRM</h3>
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
               <p className="text-gray-400">The CRM that grows revenue.</p>
             </div>
             <div>
@@ -464,7 +496,11 @@ const CRMLandingPage = () => {
             </div>
           </div>
           <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+<<<<<<< HEAD
             <p>&copy; 2025 VertexCRM. All rights reserved.</p>
+=======
+            <p>&copy; 2025 Vertex CRM. All rights reserved.</p>
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
           </div>
         </div>
       </footer>

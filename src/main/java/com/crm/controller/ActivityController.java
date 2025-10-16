@@ -15,6 +15,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/activities")
 @CrossOrigin(origins = "*")
+<<<<<<< HEAD
+=======
+@org.springframework.security.access.prepost.PreAuthorize("hasAnyRole('ADMIN','MANAGER','SALES')")
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
 public class ActivityController {
     
     @Autowired
@@ -34,7 +38,11 @@ public class ActivityController {
             activityDto.setMemberId(memberId);
             
             ActivityDto createdActivity = activityService.createActivity(activityDto);
+<<<<<<< HEAD
             return ResponseEntity.status(201).body(createdActivity);
+=======
+            return ResponseEntity.ok(createdActivity);
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error: " + e.getMessage());
         }

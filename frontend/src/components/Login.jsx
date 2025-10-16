@@ -8,7 +8,12 @@ import toast from 'react-hot-toast';
 function Login() {
   const [formData, setFormData] = useState({
     email: '',
+<<<<<<< HEAD
     password: ''
+=======
+    password: '',
+    tenant: ''
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
   });
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -82,11 +87,25 @@ function Login() {
         passwordLength: formData.password.length 
       });
       
+<<<<<<< HEAD
       const result = await login(formData.email.trim(), formData.password);
       
       if (result.success) {
         toast.success('Welcome!');
         navigate('/');
+=======
+      const result = await login(formData.email.trim(), formData.password, formData.tenant.trim() || undefined);
+      
+      if (result.success) {
+        toast.success('Welcome back!');
+        // Redirect based on role
+        const role = String(result.role || '').toUpperCase();
+        if (role === 'ADMIN') navigate('/admin');
+        else if (role === 'MANAGER') navigate('/manager');
+        else if (role === 'SALES') navigate('/sales');
+        else if (role === 'CUSTOMER') navigate('/customer');
+        else navigate('/');
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
       } else {
         console.error('Login failed:', result.error);
         toast.error(result.error || 'Login failed');
@@ -118,7 +137,11 @@ function Login() {
             </div>
           </div>
           <h2 className="mt-6 text-3xl font-bold text-secondary-900">
+<<<<<<< HEAD
             Welcome
+=======
+            Welcome back
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
           </h2>
           <p className="mt-2 text-sm text-secondary-600">
             Sign in to your Vertex CRM account
@@ -167,6 +190,25 @@ function Login() {
             </div>
 
             <div>
+<<<<<<< HEAD
+=======
+              <label htmlFor="tenant" className="label">
+                Tenant (Organization) Hint
+              </label>
+              <input
+                id="tenant"
+                name="tenant"
+                type="text"
+                placeholder="e.g. acme or acme@example.com"
+                className="input"
+                value={formData.tenant}
+                onChange={handleChange}
+              />
+              <p className="mt-1 text-xs text-secondary-500">Optional. Used for routing/login hints.</p>
+            </div>
+
+            <div>
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
               <label htmlFor="password" className="label">
                 Password
               </label>

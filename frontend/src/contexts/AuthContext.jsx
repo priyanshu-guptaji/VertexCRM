@@ -17,14 +17,80 @@ export function AuthProvider({ children }) {
       // Set token in API headers
       api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       
+<<<<<<< HEAD
       // Get user info from token (you might want to decode JWT or make an API call)
       const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
       setUser(userInfo);
+=======
+      // Get user info and normalize role casing
+      const stored = JSON.parse(localStorage.getItem('userInfo') || '{}');
+      const roleRaw = stored && stored.role ? String(stored.role).toUpperCase() : undefined;
+      // Canonicalize to match backend @PreAuthorize and frontend routes
+      const roleCanonical = roleRaw
+        ? (roleRaw.startsWith('ADMIN') ? 'ADMIN'
+          : roleRaw.startsWith('MANAGER') ? 'MANAGER'
+          : roleRaw.includes('SALES') ? 'SALES'
+          : roleRaw.startsWith('USER') ? 'USER'
+          : roleRaw.replace(/[^A-Z0-9]/g, ''))
+        : undefined;
+      const normalized = stored ? { ...stored, role: roleCanonical } : stored;
+      setUser(normalized);
+      // Attach multi-tenant hints to every request if available
+      if (normalized && (normalized.orgId || normalized.accountId)) {
+        if (normalized.orgId) api.defaults.headers.common['X-Tenant-Id'] = normalized.orgId;
+        if (normalized.accountId) api.defaults.headers.common['X-Account-Id'] = normalized.accountId;
+      }
+      if (normalized !== stored) {
+        localStorage.setItem('userInfo', JSON.stringify(normalized));
+      }
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
     }
     setLoading(false);
   }, []);
 
+<<<<<<< HEAD
   const login = async (email, password) => {
+=======
+  // Helper to persist auth data consistently (ADMIN or CUSTOMER)
+  const persistAuth = (payload = {}) => {
+    const {
+      token,
+      memberId,
+      userId,
+      email: userEmail,
+      name,
+      orgId,
+      orgName,
+      accountId,
+      role
+    } = payload;
+    if (!token) return { success: false, error: 'Invalid response from server - no token received' };
+    const roleUpper = String(role || '').toUpperCase();
+    const roleNormalized = roleUpper.startsWith('ADMIN') ? 'ADMIN'
+      : roleUpper.startsWith('MANAGER') ? 'MANAGER'
+      : roleUpper.includes('SALES') ? 'SALES'
+      : roleUpper.startsWith('USER') ? 'USER'
+      : roleUpper.replace(/[^A-Z0-9]/g, '');
+    const nextUser = {
+      memberId: memberId ?? userId,
+      email: userEmail,
+      name,
+      orgId,
+      orgName,
+      accountId: accountId ?? null,
+      role: roleNormalized
+    };
+    localStorage.setItem('token', token);
+    localStorage.setItem('userInfo', JSON.stringify(nextUser));
+    api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    if (nextUser.orgId) api.defaults.headers.common['X-Tenant-Id'] = nextUser.orgId;
+    if (nextUser.accountId) api.defaults.headers.common['X-Account-Id'] = nextUser.accountId;
+    setUser(nextUser);
+    return { success: true, role: roleNormalized, user: nextUser, token };
+  };
+
+  const login = async (email, password, tenantHint) => {
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
     try {
       // Validate input
       if (!email || !password) {
@@ -62,6 +128,7 @@ export function AuthProvider({ children }) {
       console.log('Sending login request to:', api.defaults.baseURL + '/auth/login');
       console.log('Request payload:', { email: loginData.email, password: '***' });
       
+<<<<<<< HEAD
       const response = await api.post('/auth/login', loginData);
       
       console.log('Login response status:', response.status);
@@ -100,6 +167,14 @@ export function AuthProvider({ children }) {
       });
       
       return { success: true };
+=======
+      const response = await api.post('/auth/login', loginData, {
+        headers: tenantHint ? { 'X-Tenant': tenantHint } : {}
+      });
+      console.log('Login response status:', response.status);
+      console.log('Login response data:', response.data);
+      return persistAuth(response.data);
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
     } catch (error) {
       console.error('Login error details:', {
         message: error.message,
@@ -151,6 +226,30 @@ export function AuthProvider({ children }) {
     }
   };
 
+<<<<<<< HEAD
+=======
+  // Customer login (returns accountId)
+  const loginCustomer = async (email, password, tenantHint) => {
+    try {
+      if (!email || !password) return { success: false, error: 'Email and password are required' };
+      const response = await api.post('/auth/customer/login', { email: email.trim(), password }, {
+        headers: tenantHint ? { 'X-Tenant': tenantHint } : {}
+      });
+      console.log('Customer login response:', response.data);
+      return persistAuth(response.data);
+    } catch (error) {
+      const status = error.response?.status;
+      const data = error.response?.data;
+      const msg = status === 401 ? 'Invalid credentials'
+        : status === 403 ? 'Access denied'
+        : status === 400 ? (data?.message || 'Invalid login data')
+        : status >= 500 ? 'Server error. Please try again later.'
+        : (data?.message || 'Login failed');
+      return { success: false, error: msg };
+    }
+  };
+
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
   const register = async (orgName, orgEmail, adminName, adminEmail, adminPassword) => {
     try {
       const response = await api.post('/auth/register', {
@@ -190,17 +289,49 @@ export function AuthProvider({ children }) {
     }
   };
 
+<<<<<<< HEAD
+=======
+  // Customer signup
+  const registerCustomer = async ({ fullName, email, password, companyName, phone }) => {
+    try {
+      const response = await api.post('/auth/customer/signup', {
+        fullName, email, password, companyName, phone
+      });
+      return { success: true, data: response.data };
+    } catch (error) {
+      const status = error.response?.status;
+      const data = error.response?.data;
+      const msg = status === 409 ? 'Email already exists'
+        : status === 400 ? (data?.message || 'Invalid signup data')
+        : status >= 500 ? 'Server error. Please try again later.'
+        : (data?.message || 'Signup failed');
+      return { success: false, error: msg };
+    }
+  };
+
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
   const logout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('userInfo');
     delete api.defaults.headers.common['Authorization'];
+<<<<<<< HEAD
+=======
+    delete api.defaults.headers.common['X-Tenant-Id'];
+    delete api.defaults.headers.common['X-Account-Id'];
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
     setUser(null);
   };
 
   const value = {
     user,
     login,
+<<<<<<< HEAD
     register,
+=======
+    loginCustomer,
+    register,
+    registerCustomer,
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
     logout,
     loading
   };

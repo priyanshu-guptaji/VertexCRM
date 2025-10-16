@@ -67,7 +67,12 @@ function Leads() {
       setFormData({ leadName: '', leadEmail: '', phone: '', isVerified: false });
       fetchLeads();
     } catch (error) {
+<<<<<<< HEAD
       toast.error(error.response?.data || 'Failed to save lead');
+=======
+      const message = typeof error.response?.data === 'string' ? error.response.data : (error.userMessage || 'Failed to save lead');
+      toast.error(message);
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
     }
   };
 

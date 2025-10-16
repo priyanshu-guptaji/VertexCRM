@@ -52,16 +52,46 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             logger.debug("JWT Filter - Validating token for user: " + username);
             try {
                 if (jwtConfig.validateToken(jwtToken, username)) {
+<<<<<<< HEAD
                     // Extract role from token and create authorities
                     String role = jwtConfig.extractRole(jwtToken);
                     List<SimpleGrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_" + role));
+=======
+                    // Extract role from token and create authorities (normalize to expected Spring format)
+                    String role = jwtConfig.extractRole(jwtToken);
+                    String roleUpper = role != null ? role.toUpperCase() : "";
+                    // Map common role names to consistent identifiers without spaces
+                    String normalizedRole;
+                    if (roleUpper.startsWith("ADMIN")) {
+                        normalizedRole = "ADMIN";
+                    } else if (roleUpper.startsWith("MANAGER")) {
+                        normalizedRole = "MANAGER";
+                    } else if (roleUpper.contains("SALES")) {
+                        normalizedRole = "SALES";
+                    } else if (roleUpper.startsWith("USER")) {
+                        normalizedRole = "USER";
+                    } else {
+                        // Fallback: remove non-alphanumerics and spaces
+                        normalizedRole = roleUpper.replaceAll("[^A-Z0-9]", "");
+                    }
+                    Long orgId = jwtConfig.extractOrgId(jwtToken);
+                    Long memberId = jwtConfig.extractMemberId(jwtToken);
+                    TenantContext.setRole(normalizedRole);
+                    TenantContext.setOrgId(orgId);
+                    TenantContext.setMemberId(memberId);
+                    List<SimpleGrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_" + normalizedRole));
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
                     
                     UsernamePasswordAuthenticationToken authToken = 
                         new UsernamePasswordAuthenticationToken(username, null, authorities);
                     authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authToken);
                     
+<<<<<<< HEAD
                     logger.debug("JWT Filter - Authentication set for user: " + username + " with role: " + role);
+=======
+                    logger.debug("JWT Filter - Authentication set for user: " + username + " with role: " + roleUpper);
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
                 } else {
                     logger.warn("JWT Filter - Token validation failed for user: " + username);
                 }
@@ -74,6 +104,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             logger.debug("JWT Filter - Authentication already exists in SecurityContext");
         }
         
+<<<<<<< HEAD
         filterChain.doFilter(request, response);
+=======
+        try {
+            filterChain.doFilter(request, response);
+        } finally {
+            TenantContext.clear();
+        }
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
     }
 }

@@ -1,6 +1,9 @@
 package com.crm.dto;
 
+<<<<<<< HEAD
 import com.fasterxml.jackson.annotation.JsonAlias;
+=======
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -14,21 +17,31 @@ public class ActivityDto {
     
     @NotBlank(message = "Activity type is required")
     @Size(max = 50, message = "Activity type must not exceed 50 characters")
+<<<<<<< HEAD
     // Accept either "activityType" (frontend v1) or "type" (alt schema)
     @JsonAlias({"type", "activityType"})
+=======
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
     private String activityType;
     
     @NotBlank(message = "Activity subject is required")
     @Size(max = 200, message = "Activity subject must not exceed 200 characters")
+<<<<<<< HEAD
     // Accept either "subject" (frontend v1) or "name" (alt schema)
     @JsonAlias({"name", "subject"})
+=======
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
     private String subject;
     
     @Size(max = 1000, message = "Description must not exceed 1000 characters")
     private String description;
     
     @NotNull(message = "Activity date is required")
+<<<<<<< HEAD
     // Rely on Spring Boot's default ISO_LOCAL_DATE_TIME parsing for LocalDateTime
+=======
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
     private LocalDateTime activityDate;
     
     @Size(max = 50, message = "Status must not exceed 50 characters")
@@ -37,8 +50,11 @@ public class ActivityDto {
     @Size(max = 50, message = "Priority must not exceed 50 characters")
     private String priority;
     
+<<<<<<< HEAD
     // Removed @NotNull: controller populates orgId from JWT after validation would have run.
     // Validation that orgId is present is enforced in service instead to avoid 400 on create/update.
+=======
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
     private Long orgId;
     
     private Long memberId;

@@ -15,6 +15,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/leads")
 @CrossOrigin(origins = "*")
+<<<<<<< HEAD
+=======
+@org.springframework.security.access.prepost.PreAuthorize("hasAnyRole('ADMIN','MANAGER','SALES')")
+>>>>>>> c3722ea63fb4401b3489db78259aed343a450c80
 public class LeadController {
     
     @Autowired
