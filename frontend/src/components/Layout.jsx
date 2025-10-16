@@ -59,10 +59,10 @@ function Layout({ children }) {
         {/* Logo */}
         <div className="flex h-16 items-center justify-between px-6 border-b border-secondary-200">
           <div className="flex items-center space-x-3">
-            {/* <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary-600">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary-600">
               <BarChart3 className="h-5 w-5 text-white" />
-            </div> */}
-            <span className="text-xl font-bold text-secondary-900">Crux CRM</span>
+            </div>
+            <span className="text-xl font-bold text-secondary-900">VertexCRM</span>
           </div>
           <button
             onClick={() => setSidebarOpen(false)}
@@ -180,7 +180,7 @@ function Layout({ children }) {
       {/* Main content */}
       <div className="flex flex-1 flex-col overflow-hidden">
         {/* Top navigation */}
-        <header className="bg-white shadow-sm border-b border-secondary-200">
+        {/* <header className="bg-white shadow-sm border-b border-secondary-200">
           <div className="flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
             <div className="flex items-center">
               <button
@@ -198,7 +198,7 @@ function Layout({ children }) {
 
             <div className="flex items-center space-x-4">
               {/* Search */}
-              <div className="hidden md:block">
+              {/* <div className="hidden md:block">
                 <div className="relative">
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-secondary-400" />
                   <input
@@ -207,21 +207,21 @@ function Layout({ children }) {
                     className="pl-10 pr-4 py-2 border border-secondary-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                   />
                 </div>
-              </div>
+              </div> */}
 
               {/* Notifications */}
-              <button className="p-2 text-secondary-400 hover:text-secondary-600 hover:bg-secondary-100 rounded-lg transition-colors">
+              {/* <button className="p-2 text-secondary-400 hover:text-secondary-600 hover:bg-secondary-100 rounded-lg transition-colors">
                 <Bell className="h-5 w-5" />
-              </button>
+              </button> */}
 
               {/* Quick Add */}
-              <button className="btn btn-primary btn-sm">
+              {/* <button className="btn btn-primary btn-sm">
                 <Plus className="h-4 w-4 mr-2" />
                 Quick Add
               </button>
             </div>
-          </div>
-        </header>
+          </div> */}
+        {/* </header>} */}
 
         {/* Page content */}
         <main className="flex-1 overflow-y-auto">

@@ -3,7 +3,10 @@ package com.crm.util;
 import com.crm.config.JwtConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -45,6 +48,50 @@ public class AuthenticationUtils {
             return requestTokenHeader.substring(7);
         }
         return null;
+    }
+    
+    /**
+     * Get current organization ID from request context
+     */
+    public Long getCurrentOrgId() {
+        HttpServletRequest request = getCurrentRequest();
+        if (request != null) {
+            String token = extractTokenFromRequest(request);
+            if (token != null) {
+                try {
+                    return jwtConfig.extractOrgId(token);
+                } catch (Exception e) {
+                    return 1L;
+                }
+            }
+        }
+        return 1L;
+    }
+    
+    /**
+     * Get current member ID from request context
+     */
+    public Long getCurrentMemberId() {
+        HttpServletRequest request = getCurrentRequest();
+        if (request != null) {
+            String token = extractTokenFromRequest(request);
+            if (token != null) {
+                try {
+                    return jwtConfig.extractMemberId(token);
+                } catch (Exception e) {
+                    return 1L;
+                }
+            }
+        }
+        return 1L;
+    }
+    
+    /**
+     * Get current HTTP request from context
+     */
+    private HttpServletRequest getCurrentRequest() {
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        return attributes != null ? attributes.getRequest() : null;
     }
 }
 

@@ -105,7 +105,7 @@ function Register() {
             Create your organization
           </h2>
           <p className="mt-2 text-sm text-secondary-600">
-            Get started with CRM Pro in just a few steps
+            Get started with Vertex CRM in just a few steps
           </p>
         </motion.div>
 
@@ -389,7 +389,7 @@ function Register() {
           transition={{ duration: 0.5, delay: 0.3 }}
           className="text-center text-sm text-secondary-500"
         >
-          <p>© 2024 CRM Pro. All rights reserved.</p>
+          <p>© 2024 Vertex CRM. All rights reserved.</p>
         </motion.div>
       </div>
     </div>

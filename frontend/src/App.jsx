@@ -14,6 +14,9 @@ import Members from './components/Members.jsx';
 import Organizations from './components/Organizations.jsx';
 import Layout from './components/Layout.jsx';
 import CRMLandingPage from './components/CRMLandingPage.jsx';
+import Campaigns from './components/Campaigns.jsx';
+import Tickets from './components/Tickets.jsx';
+import KnowledgeBase from './components/KnowledgeBase.jsx';
 
 function ProtectedRoute({ children }) {
   const { user, loading } = useAuth();
@@ -34,6 +37,36 @@ const router = createBrowserRouter([
   {
     path: "/home",
     element: <CRMLandingPage />
+  },
+  {
+    path: "/campaigns",
+    element: (
+      <ProtectedRoute>
+        <Layout>
+          <Campaigns />
+        </Layout>
+      </ProtectedRoute>
+    )
+  },
+  {
+    path: "/tickets",
+    element: (
+      <ProtectedRoute>
+        <Layout>
+          <Tickets />
+        </Layout>
+      </ProtectedRoute>
+    )
+  },
+  {
+    path: "/knowledge-base",
+    element: (
+      <ProtectedRoute>
+        <Layout>
+          <KnowledgeBase />
+        </Layout>
+      </ProtectedRoute>
+    )
   },
   {
     path: "/login",

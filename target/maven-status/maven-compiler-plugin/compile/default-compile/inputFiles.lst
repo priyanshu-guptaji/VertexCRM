@@ -1,53 +1,78 @@
-D:\CRM Test\src\main\java\com\crm\service\SimpleAuthService.java
-D:\CRM Test\src\main\java\com\crm\entity\Account.java
-D:\CRM Test\src\main\java\com\crm\dto\ActivityDto.java
-D:\CRM Test\src\main\java\com\crm\config\JwtConfig.java
-D:\CRM Test\src\main\java\com\crm\service\DataInitializationService.java
-D:\CRM Test\src\main\java\com\crm\dto\LoginRequest.java
-D:\CRM Test\src\main\java\com\crm\entity\Lead.java
-D:\CRM Test\src\main\java\com\crm\repository\OrganizationRepository.java
-D:\CRM Test\src\main\java\com\crm\repository\AccountRepository.java
-D:\CRM Test\src\main\java\com\crm\service\DealService.java
-D:\CRM Test\src\main\java\com\crm\repository\DealRepository.java
-D:\CRM Test\src\main\java\com\crm\dto\ContactDto.java
-D:\CRM Test\src\main\java\com\crm\controller\LeadController.java
-D:\CRM Test\src\main\java\com\crm\entity\Activity.java
-D:\CRM Test\src\main\java\com\crm\controller\ActivityController.java
-D:\CRM Test\src\main\java\com\crm\entity\Role.java
-D:\CRM Test\src\main\java\com\crm\repository\ActivityRepository.java
-D:\CRM Test\src\main\java\com\crm\repository\MemberRepository.java
-D:\CRM Test\src\main\java\com\crm\service\LeadService.java
-D:\CRM Test\src\main\java\com\crm\dto\UserResponseDto.java
-D:\CRM Test\src\main\java\com\crm\security\JwtAuthenticationEntryPoint.java
-D:\CRM Test\src\main\java\com\crm\controller\AccountController.java
-D:\CRM Test\src\main\java\com\crm\dto\DealDto.java
-D:\CRM Test\src\main\java\com\crm\config\JacksonConfig.java
-D:\CRM Test\src\main\java\com\crm\MultiTenantCrmApplication.java
-D:\CRM Test\src\main\java\com\crm\repository\RoleRepository.java
-D:\CRM Test\src\main\java\com\crm\dto\MemberDto.java
-D:\CRM Test\src\main\java\com\crm\dto\OrganizationDto.java
-D:\CRM Test\src\main\java\com\crm\service\ActivityService.java
-D:\CRM Test\src\main\java\com\crm\entity\Contact.java
-D:\CRM Test\src\main\java\com\crm\service\OrganizationService.java
-D:\CRM Test\src\main\java\com\crm\entity\Member.java
-D:\CRM Test\src\main\java\com\crm\controller\RoleController.java
-D:\CRM Test\src\main\java\com\crm\config\SecurityConfig.java
-D:\CRM Test\src\main\java\com\crm\entity\Deal.java
-D:\CRM Test\src\main\java\com\crm\controller\DealController.java
-D:\CRM Test\src\main\java\com\crm\dto\LeadDto.java
-D:\CRM Test\src\main\java\com\crm\service\ContactService.java
-D:\CRM Test\src\main\java\com\crm\repository\LeadRepository.java
-D:\CRM Test\src\main\java\com\crm\repository\ContactRepository.java
-D:\CRM Test\src\main\java\com\crm\dto\AccountDto.java
-D:\CRM Test\src\main\java\com\crm\controller\ContactController.java
-D:\CRM Test\src\main\java\com\crm\controller\MemberController.java
-D:\CRM Test\src\main\java\com\crm\entity\Organization.java
-D:\CRM Test\src\main\java\com\crm\controller\AuthController.java
-D:\CRM Test\src\main\java\com\crm\service\AuthService.java
-D:\CRM Test\src\main\java\com\crm\util\AuthenticationUtils.java
-D:\CRM Test\src\main\java\com\crm\config\GlobalExceptionHandler.java
-D:\CRM Test\src\main\java\com\crm\service\MemberService.java
-D:\CRM Test\src\main\java\com\crm\security\JwtAuthenticationFilter.java
-D:\CRM Test\src\main\java\com\crm\dto\JwtResponse.java
-D:\CRM Test\src\main\java\com\crm\service\AccountService.java
-D:\CRM Test\src\main\java\com\crm\controller\OrganizationController.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\repository\MemberRepository.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\repository\OrganizationRepository.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\service\KnowledgeBaseService.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\tenant\CurrentTenantIdentifierResolverImpl.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\entity\AuditLog.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\dto\CampaignDto.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\dto\TicketDto.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\repository\TicketRepository.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\service\DataInitializationService.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\repository\DealRepository.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\tenant\TenantContext.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\dto\KnowledgeBaseArticleDto.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\service\SimpleAuthService.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\config\MultiTenancyConfig.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\service\AccountService.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\repository\AccountRepository.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\tenant\TenantFilter.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\controller\AccountController.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\service\MemberService.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\util\AuthenticationUtils.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\controller\DealController.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\entity\Role.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\security\JwtAuthenticationFilter.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\dto\JwtResponse.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\entity\Organization.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\dto\LeadDto.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\dto\MemberDto.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\repository\AuditLogRepository.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\dto\ActivityDto.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\service\AuthService.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\service\CampaignService.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\service\DealService.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\entity\Contact.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\entity\KnowledgeBaseArticle.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\controller\RoleController.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\dto\DealDto.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\service\OrganizationService.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\controller\ActivityController.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\tenant\SchemaMultiTenantConnectionProvider.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\repository\ActivityRepository.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\controller\ContactController.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\repository\LeadRepository.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\controller\MemberController.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\audit\AuditAspect.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\dto\LoginRequest.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\repository\RoleRepository.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\MultiTenantCrmApplication.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\controller\TenantAdminController.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\entity\Member.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\repository\ContactRepository.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\repository\KnowledgeBaseArticleRepository.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\security\JwtAuthenticationEntryPoint.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\controller\AuthController.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\service\ActivityService.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\repository\CampaignRepository.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\controller\OrganizationController.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\dto\ContactDto.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\dto\OrganizationDto.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\service\TenantSchemaService.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\service\TicketService.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\dto\AccountDto.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\controller\CampaignController.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\config\JacksonConfig.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\entity\Campaign.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\entity\Deal.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\config\SecurityConfig.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\controller\KnowledgeBaseController.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\entity\Account.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\config\GlobalExceptionHandler.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\controller\LeadController.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\entity\Lead.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\entity\Activity.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\service\ContactService.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\dto\UserResponseDto.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\controller\TicketController.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\entity\Ticket.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\config\JwtConfig.java
+D:\priya crm\priya crm\CRM-Test\src\main\java\com\crm\service\LeadService.java

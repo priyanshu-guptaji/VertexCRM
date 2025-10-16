@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @Repository
@@ -36,4 +37,8 @@ public interface DealRepository extends JpaRepository<Deal, Long> {
 	// Deal stage distribution
 	@Query("SELECT d.dealStage, COUNT(d) FROM Deal d GROUP BY d.dealStage")
 	List<Object[]> findDealStageDistribution();
+	
+	// Additional queries for automation
+	@Query("SELECT d FROM Deal d WHERE d.dealStage = :stage AND d.updatedAt < :cutoffDate")
+	List<Deal> findStaleDeals(@Param("stage") String stage, @Param("cutoffDate") OffsetDateTime cutoffDate);
 }

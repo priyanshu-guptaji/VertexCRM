@@ -14,6 +14,9 @@ public class OrganizationService {
     
     @Autowired
     private OrganizationRepository organizationRepository;
+
+    @Autowired
+    private TenantSchemaService tenantSchemaService;
     
     public OrganizationDto createOrganization(OrganizationDto organizationDto) {
         if (organizationRepository.existsByOrgEmail(organizationDto.getOrgEmail())) {
@@ -25,6 +28,13 @@ public class OrganizationService {
         organization.setOrgEmail(organizationDto.getOrgEmail());
         
         Organization savedOrganization = organizationRepository.save(organization);
+
+        // Provision tenant schema derived from org name (fallback to email local part)
+        String base = (organizationDto.getOrgName() != null && !organizationDto.getOrgName().isBlank())
+                ? organizationDto.getOrgName()
+                : (organizationDto.getOrgEmail() != null ? organizationDto.getOrgEmail().split("@")[0] : "public");
+        String schema = base.trim().toLowerCase().replaceAll("[^a-z0-9_]+", "_");
+        tenantSchemaService.provisionSchema(schema);
         return convertToDto(savedOrganization);
     }
     

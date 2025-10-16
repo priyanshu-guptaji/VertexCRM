@@ -1,12 +1,12 @@
 -- Multi-Tenant CRM Database Initialization Script
 
 -- Create database and user
-CREATE DATABASE crm_db;
+CREATE DATABASE vertexcrm;
 CREATE USER crm_user WITH PASSWORD 'crm_password';
-GRANT ALL PRIVILEGES ON DATABASE crm_db TO crm_user;
+GRANT ALL PRIVILEGES ON DATABASE vertexcrm TO crm_user;
 
 -- Connect to the database
-\c crm_db;
+\c vertexcrm;
 
 -- Grant schema privileges
 GRANT ALL ON SCHEMA public TO crm_user;

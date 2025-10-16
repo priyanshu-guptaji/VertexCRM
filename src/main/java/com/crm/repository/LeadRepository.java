@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @Repository
@@ -26,4 +27,8 @@ public interface LeadRepository extends JpaRepository<Lead, Long> {
     
     @Query("SELECT l FROM Lead l LEFT JOIN FETCH l.organization LEFT JOIN FETCH l.member WHERE l.leadId = :leadId")
     Lead findByIdWithRelations(@Param("leadId") Long leadId);
+    
+    // Additional queries for automation
+    @Query("SELECT l FROM Lead l WHERE l.updatedAt < :cutoffDate")
+    List<Lead> findLeadsWithNoRecentActivity(@Param("cutoffDate") OffsetDateTime cutoffDate);
 }

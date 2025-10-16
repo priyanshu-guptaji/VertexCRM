@@ -85,7 +85,7 @@ function Login() {
       const result = await login(formData.email.trim(), formData.password);
       
       if (result.success) {
-        toast.success('Welcome back!');
+        toast.success('Welcome!');
         navigate('/');
       } else {
         console.error('Login failed:', result.error);
@@ -118,10 +118,10 @@ function Login() {
             </div>
           </div>
           <h2 className="mt-6 text-3xl font-bold text-secondary-900">
-            Welcome back
+            Welcome
           </h2>
           <p className="mt-2 text-sm text-secondary-600">
-            Sign in to your CRM Pro account
+            Sign in to your Vertex CRM account
           </p>
         </motion.div>
 
@@ -244,7 +244,7 @@ function Login() {
                 <div className="w-full border-t border-secondary-300" />
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-secondary-500">New to CRM Pro?</span>
+                <span className="px-2 bg-white text-secondary-500">New to Vertex CRM?</span>
               </div>
             </div>
 
@@ -266,7 +266,7 @@ function Login() {
           transition={{ duration: 0.5, delay: 0.3 }}
           className="text-center text-sm text-secondary-500"
         >
-          <p>© 2024 CRM Pro. All rights reserved.</p>
+          <p>© 2024 Vertex CRM. All rights reserved.</p>
         </motion.div>
       </div>
     </div>

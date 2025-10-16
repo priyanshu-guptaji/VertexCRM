@@ -31,6 +31,15 @@ public class Role {
     @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Member> members;
     
+    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<RolePermission> rolePermissions;
+    
+    @Column(name = "description", columnDefinition = "TEXT")
+    private String description;
+    
+    @Column(name = "is_system", nullable = false)
+    private Boolean isSystem = false; // System roles cannot be deleted
+    
     @PrePersist
     protected void onCreate() {
         createdAt = OffsetDateTime.now(ZoneOffset.UTC);
@@ -88,5 +97,29 @@ public class Role {
     
     public void setMembers(List<Member> members) {
         this.members = members;
+    }
+    
+    public List<RolePermission> getRolePermissions() {
+        return rolePermissions;
+    }
+    
+    public void setRolePermissions(List<RolePermission> rolePermissions) {
+        this.rolePermissions = rolePermissions;
+    }
+    
+    public String getDescription() {
+        return description;
+    }
+    
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    
+    public Boolean getIsSystem() {
+        return isSystem;
+    }
+    
+    public void setIsSystem(Boolean isSystem) {
+        this.isSystem = isSystem;
     }
 }
