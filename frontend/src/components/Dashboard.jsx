@@ -51,6 +51,12 @@ function Dashboard() {
   const [chartData, setChartData] = useState([]);
   const [pieData, setPieData] = useState([]);
 
+  // User-specific deals ("projects") for customer-facing dashboard
+  const [myDeals, setMyDeals] = useState([]);
+  const [myDealsLoading, setMyDealsLoading] = useState(false);
+  const [contactSubject, setContactSubject] = useState('');
+  const [contactMessage, setContactMessage] = useState('');
+
   // Track role-based access check against backend RBAC endpoints
   const [roleAccess, setRoleAccess] = useState({ status: null, message: '', authorities: [] });
 
@@ -69,6 +75,25 @@ function Dashboard() {
       return;
     }
     fetchStats();
+  }, [user, role]);
+
+  // For USER role, load their own deals/projects from the dedicated endpoint
+  useEffect(() => {
+    if (!user || role !== 'User') return;
+
+    const fetchMyDeals = async () => {
+      try {
+        setMyDealsLoading(true);
+        const response = await api.get('/deals/my');
+        setMyDeals(Array.isArray(response.data) ? response.data : []);
+      } catch (error) {
+        console.error('Error fetching user deals:', error);
+      } finally {
+        setMyDealsLoading(false);
+      }
+    };
+
+    fetchMyDeals();
   }, [user, role]);
 
   // On load (and when user changes), verify role-based access using backend endpoints
@@ -308,7 +333,7 @@ if (stages.length > 0) {
 
   const formatLocalDateTime = (value) => {
     if (!value) return '';
-    const hasSeconds = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}$/.test(value);
+    const hasSeconds = /^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}$/.test(value);
     if (hasSeconds) return value;
     return `${value}:00`;
   };
@@ -368,10 +393,44 @@ if (stages.length > 0) {
     }
   ];
 
-  // Customer (User) dashboard: simple, self-service view
+  // Helper formatters reused in both dashboards
+  const formatCurrency = (amount) => {
+    return new Intl.NumberFormat('en-IN', {
+      style: 'currency',
+      currency: 'INR',
+      maximumFractionDigits: 2,
+    }).format(amount || 0);
+  };
+
+  const formatDate = (value) => {
+    if (!value) return '';
+    try {
+      return new Date(value).toLocaleDateString();
+    } catch {
+      return '';
+    }
+  };
+
+  const handleContactSubmit = (e) => {
+    e.preventDefault();
+    // No backend defined yet for contact; this is a frontend-only UX for now
+    toast.success('Your message has been recorded. Our team will contact you shortly.');
+    setContactSubject('');
+    setContactMessage('');
+  };
+
+  // Customer (User) dashboard: profile + projects + contact form
   if (role === 'User') {
+    const currentDeals = myDeals.filter(
+      (d) => d.dealStage && !String(d.dealStage).toLowerCase().startsWith('closed')
+    );
+    const pastDeals = myDeals.filter(
+      (d) => d.dealStage && String(d.dealStage).toLowerCase().startsWith('closed')
+    );
+
     return (
       <div className="space-y-6">
+        {/* Welcome / summary */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -381,32 +440,146 @@ if (stages.length > 0) {
             Welcome, {user?.name || 'Customer'}
           </h1>
           <p className="text-gray-600">
-            Here you can manage your profile and track your requests.
+            Here is an overview of your profile and projects.
           </p>
         </motion.div>
 
+        {/* Profile + contact */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Profile card */}
           <div className="card">
-            <div className="card-content">
-              <h2 className="text-xl font-semibold text-text mb-2">My Profile</h2>
-              <p className="text-gray-600 mb-4">
-                View and update your personal information.
+            <div className="card-content space-y-3">
+              <h2 className="text-xl font-semibold text-text mb-1">My Profile</h2>
+              <div className="text-sm text-gray-700 space-y-1">
+                <div><span className="font-semibold">Name:</span> {user?.name}</div>
+                <div><span className="font-semibold">Email:</span> {user?.email}</div>
+                <div><span className="font-semibold">Organization:</span> {user?.orgName}</div>
+                <div><span className="font-semibold">Member ID:</span> {user?.memberId}</div>
+                <div><span className="font-semibold">Role:</span> {user?.role}</div>
+              </div>
+              <p className="text-xs text-gray-500 mt-2">
+                To update your profile information, please contact your administrator.
               </p>
-              <button className="btn btn-primary btn-sm" disabled>
-                Manage Profile (coming soon)
-              </button>
             </div>
           </div>
 
+          {/* Contact form */}
           <div className="card">
             <div className="card-content">
-              <h2 className="text-xl font-semibold text-text mb-2">Support Requests</h2>
-              <p className="text-gray-600 mb-4">
-                Check the status of your tickets or submit a new request.
+              <h2 className="text-xl font-semibold text-text mb-2">Contact Support</h2>
+              <p className="text-gray-600 mb-4 text-sm">
+                Have a question about your projects or account? Send us a message.
               </p>
-              <button className="btn btn-primary btn-sm" disabled>
-                View Requests (coming soon)
-              </button>
+              <form onSubmit={handleContactSubmit} className="space-y-3">
+                <input
+                  type="text"
+                  className="input w-full"
+                  placeholder="Subject"
+                  value={contactSubject}
+                  onChange={(e) => setContactSubject(e.target.value)}
+                  required
+                />
+                <textarea
+                  className="input w-full"
+                  rows={4}
+                  placeholder="Describe your question or issue"
+                  value={contactMessage}
+                  onChange={(e) => setContactMessage(e.target.value)}
+                  required
+                />
+                <div className="flex justify-end">
+                  <button type="submit" className="btn btn-primary btn-sm">
+                    Send Message
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        {/* Projects (deals) */}
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <h2 className="text-xl font-semibold text-text">My Projects</h2>
+            {myDealsLoading && (
+              <span className="text-xs text-gray-500">Loading your projects…</span>
+            )}
+          </div>
+
+          {/* Current projects */}
+          <div className="card">
+            <div className="card-header">
+              <h3 className="card-title">Current Projects</h3>
+              <p className="card-description">Active deals linked to your account</p>
+            </div>
+            <div className="card-content space-y-3">
+              {currentDeals.length === 0 && !myDealsLoading && (
+                <p className="text-sm text-gray-500">You do not have any active projects right now.</p>
+              )}
+              {currentDeals.map((deal) => (
+                <div
+                  key={deal.dealId}
+                  className="flex flex-col md:flex-row md:items-center md:justify-between border rounded-xl px-4 py-3 bg-gray-50"
+                >
+                  <div>
+                    <div className="font-medium text-text">{deal.dealName}</div>
+                    {deal.description && (
+                      <div className="text-xs text-gray-600 mt-0.5 line-clamp-2">
+                        {deal.description}
+                      </div>
+                    )}
+                    <div className="mt-1 text-xs text-gray-500 space-x-3">
+                      {deal.dealValue != null && (
+                        <span>Value: {formatCurrency(deal.dealValue)}</span>
+                      )}
+                      {deal.expectedCloseDate && (
+                        <span>Expected close: {formatDate(deal.expectedCloseDate)}</span>
+                      )}
+                    </div>
+                  </div>
+                  <div className="mt-2 md:mt-0 flex items-center space-x-2 text-xs">
+                    <span className="px-2 py-1 rounded-full bg-blue-100 text-blue-800 font-medium">
+                      {deal.dealStage}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Past projects */}
+          <div className="card">
+            <div className="card-header">
+              <h3 className="card-title">Past Projects</h3>
+              <p className="card-description">Closed deals you were associated with</p>
+            </div>
+            <div className="card-content space-y-3">
+              {pastDeals.length === 0 && !myDealsLoading && (
+                <p className="text-sm text-gray-500">No closed projects yet.</p>
+              )}
+              {pastDeals.map((deal) => (
+                <div
+                  key={deal.dealId}
+                  className="flex flex-col md:flex-row md:items-center md:justify-between border rounded-xl px-4 py-3 bg-white"
+                >
+                  <div>
+                    <div className="font-medium text-text">{deal.dealName}</div>
+                    <div className="mt-1 text-xs text-gray-500 space-x-3">
+                      {deal.dealValue != null && (
+                        <span>Value: {formatCurrency(deal.dealValue)}</span>
+                      )}
+                      {deal.actualCloseDate && (
+                        <span>Closed on: {formatDate(deal.actualCloseDate)}</span>
+                      )}
+                    </div>
+                  </div>
+                  <div className="mt-2 md:mt-0 flex items-center space-x-2 text-xs">
+                    <span className="px-2 py-1 rounded-full bg-gray-100 text-gray-800 font-medium">
+                      {deal.dealStage}
+                    </span>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>

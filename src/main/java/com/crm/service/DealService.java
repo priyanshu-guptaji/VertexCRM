@@ -96,6 +96,26 @@ public class DealService {
     }
     
     @Transactional(readOnly = true)
+    public List<DealDto> getDealsByMember(Long orgId, Long memberId) {
+        Organization organization = organizationRepository.findById(orgId)
+                .orElseThrow(() -> new RuntimeException("Organization not found"));
+
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new RuntimeException("Member not found"));
+
+        // Extra safety: ensure the member actually belongs to the requested organization
+        if (member.getOrganization() == null ||
+                !organization.getOrgId().equals(member.getOrganization().getOrgId())) {
+            throw new RuntimeException("Member does not belong to this organization");
+        }
+
+        return dealRepository.findByMemberWithRelations(member)
+                .stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+    
+    @Transactional(readOnly = true)
     public DealDto getDealById(Long dealId) {
         Deal deal = dealRepository.findByIdWithRelations(dealId);
         if (deal == null) {
