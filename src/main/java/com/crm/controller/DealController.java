@@ -62,7 +62,7 @@ public class DealController {
         try {
             Long orgId = authenticationUtils.getOrgIdFromAuthentication(authentication, request);
             Long memberId = authenticationUtils.getMemberIdFromAuthentication(authentication, request);
-            List<DealDto> deals = dealService.getDealsByMember(orgId, memberId);
+            List<DealDto> deals = dealService.getDealsForCurrentUser(orgId, memberId);
             return ResponseEntity.ok(deals);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error: " + e.getMessage());
