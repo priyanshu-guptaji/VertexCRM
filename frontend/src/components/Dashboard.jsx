@@ -411,12 +411,24 @@ if (stages.length > 0) {
     }
   };
 
-  const handleContactSubmit = (e) => {
+  const handleContactSubmit = async (e) => {
     e.preventDefault();
-    // No backend defined yet for contact; this is a frontend-only UX for now
-    toast.success('Your message has been recorded. Our team will contact you shortly.');
-    setContactSubject('');
-    setContactMessage('');
+    try {
+      const payload = {
+        subject: contactSubject,
+        message: contactMessage,
+      };
+      await api.post('/support/contact', payload);
+      toast.success('Your message has been sent to support. We will contact you shortly.');
+      setContactSubject('');
+      setContactMessage('');
+    } catch (error) {
+      console.error('Failed to send support request:', error);
+      const backendMessage = typeof error.response?.data === 'string'
+        ? error.response.data
+        : (error.response?.data?.message || error.response?.data || 'Failed to send your message');
+      toast.error(backendMessage);
+    }
   };
 
   // Customer (User) dashboard: profile + projects + contact form

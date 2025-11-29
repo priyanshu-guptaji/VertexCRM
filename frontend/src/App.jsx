@@ -13,7 +13,7 @@ import Activities from './components/Activities.jsx';
 import Members from './components/Members.jsx';
 import Organizations from './components/Organizations.jsx';
 import Layout from './components/Layout.jsx';
-import CRMLandingPage from './components/CRMLandingPage.jsx';
+import CRMLandingPage from './components/Landing.jsx';
 import RbacDashboard from './components/RbacDashboard.jsx';
 import RoleBasedRoute from './components/RoleBasedRoute.jsx';
 
